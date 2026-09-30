@@ -42,13 +42,19 @@
     html { scroll-behavior: smooth; }
     ::selection { background-color: #18181b; color: #ffffff; }
     .glass-nav {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
     }
     .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
     .custom-scroll::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 4px; }
     .custom-scroll::-webkit-scrollbar-track { background: #fafafa; }
+    /* Face Hiding / Torso Focusing for Blanks */
+    .headless-crop {
+      object-fit: cover;
+      object-position: center 68%;
+      transform: scale(1.18);
+    }
   </style>
 </head>
 
@@ -63,16 +69,19 @@
   <header class="sticky top-0 z-40 glass-nav border-b border-studio-200 transition-all duration-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
-      <!-- Hamburger & Mobile Menu Trigger -->
+      <!-- Hamburger Trigger & Top Navigation Links -->
       <div class="flex items-center space-x-3">
         <button id="menu-btn" onclick="toggleDrawer('nav-drawer')" class="p-2 -ml-2 rounded-lg text-studio-800 hover:text-black hover:bg-studio-100 transition-colors" aria-label="Toggle navigation">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
         <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold tracking-wider uppercase">
-          <button onclick="switchView('store-view')" class="text-black hover:opacity-70 transition-opacity">Collection</button>
-          <button onclick="filterCategory('t-shirts')" class="text-studio-800 hover:text-black transition-colors">Tees</button>
-          <button onclick="filterCategory('polos')" class="text-studio-800 hover:text-black transition-colors">Polos</button>
-          <button onclick="filterCategory('vault')" class="text-studio-800 hover:text-black transition-colors">Women's Vault</button>
+          <button onclick="switchView('store-view'); filterCategory('all');" class="text-black hover:opacity-70 transition-opacity">Collection</button>
+          <button onclick="switchView('store-view'); filterCategory('t-shirts');" class="text-studio-800 hover:text-black transition-colors">Tees</button>
+          <button onclick="switchView('store-view'); filterCategory('polos');" class="text-studio-800 hover:text-black transition-colors">Polos</button>
+          <button onclick="switchView('vault-view')" class="text-studio-800 hover:text-black transition-colors flex items-center gap-1">
+            <span>Women's Vault</span>
+            <span class="text-[9px] bg-studio-200 text-black px-1 py-0.5 rounded font-bold uppercase">Soon</span>
+          </button>
           <button onclick="scrollToStockists()" class="text-studio-800 hover:text-black transition-colors">Store Locator</button>
           <button onclick="openGuaranteePortal('claim')" class="text-studio-800 hover:text-black transition-colors">Guarantee</button>
           <button onclick="switchView('about-view')" class="text-studio-800 hover:text-black transition-colors">Dossier</button>
@@ -93,10 +102,6 @@
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
-        </button>
-
-        <button onclick="toggleModal('search-modal')" class="p-2 rounded-lg text-studio-800 hover:text-black hover:bg-studio-100 transition-colors" title="Visual Camera Search" aria-label="Visual Camera Search">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3" stroke-width="1.8"/></svg>
         </button>
 
         <button onclick="switchView('wishlist-view')" class="p-2 rounded-lg text-studio-800 hover:text-black hover:bg-studio-100 relative transition-colors" title="Personal Vault" aria-label="Personal Vault">
@@ -123,7 +128,7 @@
             type="text" 
             id="inline-search-input" 
             oninput="handleInlineSearch(this.value)" 
-            placeholder="Type silhouette, weight (e.g. 220 GSM), or fit..." 
+            placeholder="Search 180 GSM, 240 GSM Terry, or Polo..." 
             class="w-full pl-10 pr-10 py-2 text-xs bg-studio-100 rounded-lg border border-studio-200 focus:border-black focus:bg-white focus:outline-none text-black transition-colors"
           >
           <button onclick="toggleHeaderSearchBar(false)" class="absolute right-3 text-studio-800 hover:text-black text-xs font-bold" aria-label="Close search">
@@ -147,13 +152,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div class="space-y-6">
             <span class="inline-block text-[11px] font-semibold uppercase tracking-widest text-studio-800 bg-studio-100 px-3 py-1 rounded-full">
-              Autumn / Winter 2026 Studio Run
+              Diwali Launch Drop 01 &bull; 2026 Batch
             </span>
             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-black leading-[1.1]">
               Architectural Cotton. <br>Refined Streetwear.
             </h1>
             <p class="text-studio-800 text-sm sm:text-base max-w-lg leading-relaxed font-normal">
-              Engineered with 100% super combed compact cotton, anti-roll Lycra collar ribbing, and calibrated discharge dye chemistry. Guaranteed across every official partner store.
+              Engineered with 100% super combed compact cotton, 240 GSM French Terry loops, and Lycra reinforced anti-roll collars. Offline warranty protection across our regional store network.
             </p>
             <div class="flex flex-wrap gap-4 pt-2">
               <button onclick="scrollToCollection()" class="bg-black hover:bg-studio-800 text-white px-7 py-3 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all shadow-sm">
@@ -166,9 +171,9 @@
           </div>
 
           <div class="relative rounded-2xl overflow-hidden bg-studio-100 border border-studio-200 shadow-sm aspect-[4/3] flex items-center justify-center">
-            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80" alt="SaturnGlow Studio Lookbook" class="w-full h-full object-cover">
+            <img src="french-terry.jpeg" alt="SaturnGlow Studio Lookbook" class="w-full h-full headless-crop">
             <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg border border-studio-200 text-xs font-medium text-black">
-              250 GSM Airtex Polo & 220 GSM Oversized Drop
+              240 GSM French Terry Dropshoulder & 240 GSM Polo
             </div>
           </div>
         </div>
@@ -177,14 +182,12 @@
       <!-- FILTER TABS -->
       <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-studio-200">
         <div class="flex items-center space-x-2 overflow-x-auto pb-2 md:pb-0 text-xs uppercase font-semibold">
-          <button onclick="filterCategory('all')" class="cat-pill px-4 py-2 rounded-full bg-black text-white transition-colors" data-cat="all">All Silhouettes</button>
-          <button onclick="filterCategory('t-shirts')" class="cat-pill px-4 py-2 rounded-full bg-studio-100 text-studio-800 hover:bg-studio-200 transition-colors" data-cat="t-shirts">Crew Tees</button>
-          <button onclick="filterCategory('polos')" class="cat-pill px-4 py-2 rounded-full bg-studio-100 text-studio-800 hover:bg-studio-200 transition-colors" data-cat="polos">Polo Shirts</button>
-          <button onclick="filterCategory('bottoms')" class="cat-pill px-4 py-2 rounded-full bg-studio-100 text-studio-800 hover:bg-studio-200 transition-colors" data-cat="bottoms">Bottomwear</button>
-          <button onclick="filterCategory('vault')" class="cat-pill px-4 py-2 rounded-full bg-studio-100 text-studio-800 hover:bg-studio-200 transition-colors" data-cat="vault">Women's Vault</button>
+          <button onclick="filterCategory('all')" class="cat-pill px-4 py-2 rounded-full bg-black text-white transition-colors" data-cat="all">All Drop 01</button>
+          <button onclick="filterCategory('t-shirts')" class="cat-pill px-4 py-2 rounded-full bg-studio-100 text-studio-800 hover:bg-studio-200 transition-colors" data-cat="t-shirts">Tees</button>
+          <button onclick="filterCategory('polos')" class="cat-pill px-4 py-2 rounded-full bg-studio-100 text-studio-800 hover:bg-studio-200 transition-colors" data-cat="polos">Polos</button>
         </div>
         <div class="text-xs text-studio-800 font-medium">
-          Showing <span id="item-count">6</span> core architectural styles
+          Showing <span id="item-count">3</span> certified silhouettes &bull; 100% Combed Cotton
         </div>
       </section>
 
@@ -204,15 +207,17 @@
             Store Locator & Official Stockists
           </h2>
           <p class="text-xs sm:text-sm text-studio-800 mt-2 leading-relaxed">
-            Experience our heavy-density cottons, feel the architectural drop-shoulder drape, and explore physical silhouettes at our authorized retail partner destinations. Cross-city replacement active across all stores.
+            Experience our heavy-density cottons and test physical silhouettes at our authorized retail partner destinations. Cross-city replacement active across Balotra, Jodhpur, and Barmer.
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Balotra -->
           <div class="bg-white rounded-2xl border border-studio-200 p-6 space-y-4 hover:border-black transition-colors shadow-sm flex flex-col justify-between">
             <div class="space-y-3">
               <div class="flex items-center justify-between">
-                <span class="text-[10px] font-bold uppercase tracking-wider bg-black text-white px-2.5 py-1 rounded">Tier-1 Official Store</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider bg-black text-white px-2.5 py-1 rounded">Balotra Central</span>
                 <span class="text-[11px] text-emerald-600 font-bold uppercase">Ready Stock</span>
               </div>
               <div>
@@ -222,24 +227,23 @@
                 </p>
               </div>
               <div class="text-[11px] text-studio-800 space-y-0.5">
-                <p><span class="font-semibold text-black">Available:</span> 180 GSM, 220 GSM Tees & 250 GSM Polos</p>
+                <p><span class="font-semibold text-black">Available:</span> 180 GSM, 240 GSM Terry & 240 GSM Polos</p>
                 <p><span class="font-semibold text-black">Store ID:</span> SG-BLT-01</p>
+                <p><span class="font-semibold text-black">Batch Range:</span> SG-BLT-001 to SG-BLT-1000</p>
               </div>
             </div>
-
             <div class="pt-4 border-t border-studio-100 flex items-center justify-between">
               <span class="text-[11px] text-studio-800 font-medium">Timings: 10:30 AM – 9:00 PM</span>
-              <a href="https://maps.google.com" target="_blank" class="text-xs font-bold uppercase tracking-wider text-black hover:underline flex items-center space-x-1">
-                <span>Directions &rarr;</span>
-              </a>
+              <a href="https://maps.google.com" target="_blank" class="text-xs font-bold uppercase tracking-wider text-black hover:underline">Directions &rarr;</a>
             </div>
           </div>
 
+          <!-- Jodhpur -->
           <div class="bg-white rounded-2xl border border-studio-200 p-6 space-y-4 hover:border-black transition-colors shadow-sm flex flex-col justify-between">
             <div class="space-y-3">
               <div class="flex items-center justify-between">
-                <span class="text-[10px] font-bold uppercase tracking-wider bg-studio-100 text-studio-900 px-2.5 py-1 rounded">Authorised Stockist</span>
-                <span class="text-[11px] text-emerald-600 font-bold uppercase">Latest Drop</span>
+                <span class="text-[10px] font-bold uppercase tracking-wider bg-studio-100 text-studio-900 px-2.5 py-1 rounded">Jodhpur Station</span>
+                <span class="text-[11px] text-emerald-600 font-bold uppercase">Ready Stock</span>
               </div>
               <div>
                 <h3 class="text-base font-bold text-black uppercase tracking-tight">Vogue Menswear Studio</h3>
@@ -248,40 +252,66 @@
                 </p>
               </div>
               <div class="text-[11px] text-studio-800 space-y-0.5">
-                <p><span class="font-semibold text-black">Available:</span> Full Streetwear & Vault Silhouettes</p>
-                <p><span class="font-semibold text-black">Store Desk:</span> +91 98989 89801</p>
+                <p><span class="font-semibold text-black">Available:</span> 240 GSM French Terry & Polos</p>
+                <p><span class="font-semibold text-black">Store ID:</span> SG-JDP-01</p>
+                <p><span class="font-semibold text-black">Batch Range:</span> SG-JDP-001 to SG-JDP-1000</p>
               </div>
             </div>
-
             <div class="pt-4 border-t border-studio-100 flex items-center justify-between">
               <span class="text-[11px] text-studio-800 font-medium">Timings: 11:00 AM – 9:30 PM</span>
-              <a href="https://maps.google.com" target="_blank" class="text-xs font-bold uppercase tracking-wider text-black hover:underline flex items-center space-x-1">
-                <span>Directions &rarr;</span>
-              </a>
+              <a href="https://maps.google.com" target="_blank" class="text-xs font-bold uppercase tracking-wider text-black hover:underline">Directions &rarr;</a>
             </div>
           </div>
 
-          <div class="bg-studio-100 rounded-2xl border border-dashed border-studio-300 p-6 flex flex-col justify-between space-y-4">
-            <div class="space-y-2">
-              <div class="flex items-center space-x-2">
-                <span class="w-2 h-2 rounded-full bg-black"></span>
-                <span class="text-[10px] font-bold uppercase tracking-wider text-studio-800">Retail Expansion</span>
+          <!-- Barmer -->
+          <div class="bg-white rounded-2xl border border-studio-200 p-6 space-y-4 hover:border-black transition-colors shadow-sm flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-bold uppercase tracking-wider bg-studio-100 text-studio-900 px-2.5 py-1 rounded">Barmer Hub</span>
+                <span class="text-[11px] text-emerald-600 font-bold uppercase">Ready Stock</span>
               </div>
-              <h3 class="text-base font-bold text-black uppercase tracking-tight">Become An Official Store</h3>
-              <p class="text-xs text-studio-800 leading-relaxed">
-                Run a premium multi-brand fashion outlet? Partner with SaturnGlow to receive brand-funded architectural floor display racks, weekly restyling support, 40%+ retail margins, and cross-store replacement support.
-              </p>
+              <div>
+                <h3 class="text-base font-bold text-black uppercase tracking-tight">Apex Streetwear Boutique</h3>
+                <p class="text-xs text-studio-800 leading-relaxed mt-1">
+                  Station Road, Near Roy Market, Barmer, Rajasthan - 344001
+                </p>
+              </div>
+              <div class="text-[11px] text-studio-800 space-y-0.5">
+                <p><span class="font-semibold text-black">Available:</span> Complete Drop 01 Blanks</p>
+                <p><span class="font-semibold text-black">Store ID:</span> SG-BMR-01</p>
+                <p><span class="font-semibold text-black">Batch Range:</span> SG-BMR-001 to SG-BMR-1000</p>
+              </div>
             </div>
-
-            <div class="pt-2">
-              <a href="https://wa.me/919898989801?text=Hi%20SaturnGlow,%20we%20want%20to%20apply%20to%20become%20an%20Official%20Partner%20Store" target="_blank" class="block text-center w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-3 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
-                Apply For Retail Partnership &rarr;
-              </a>
+            <div class="pt-4 border-t border-studio-100 flex items-center justify-between">
+              <span class="text-[11px] text-studio-800 font-medium">Timings: 10:30 AM – 9:00 PM</span>
+              <a href="https://maps.google.com" target="_blank" class="text-xs font-bold uppercase tracking-wider text-black hover:underline">Directions &rarr;</a>
             </div>
           </div>
+
         </div>
       </section>
 
+    </div>
+
+    <!-- WOMEN'S VAULT VIEW (COMING SOON) -->
+    <div id="vault-view" class="view-panel hidden max-w-4xl mx-auto px-4 sm:px-6 py-24 text-center">
+      <span class="inline-block text-[11px] font-semibold uppercase tracking-widest text-studio-800 bg-studio-100 px-3 py-1 rounded-full mb-3">
+        Archive Expansion
+      </span>
+      <h2 class="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-black mb-4">
+        Women's Vault &bull; Coming Soon
+      </h2>
+      <p class="text-studio-800 text-sm max-w-md mx-auto leading-relaxed mb-8">
+        We are tailoring heavy-drape cropped tees (220 GSM Combed Cotton) and hyper-wide parachute trousers specifically engineered for architectural female silhouettes. Dropping Post-Diwali.
+      </p>
+      <div class="flex justify-center gap-4">
+        <button onclick="switchView('store-view'); filterCategory('all');" class="bg-black text-white px-7 py-3 rounded-lg text-xs font-semibold uppercase tracking-wider">
+          Explore Drop 01
+        </button>
+        <button onclick="openGuaranteePortal('claim')" class="border border-studio-300 text-black px-7 py-3 rounded-lg text-xs font-semibold uppercase tracking-wider">
+          Guarantee Desk
+        </button>
+      </div>
     </div>
 
     <!-- 2. SHOPPING BAG VIEW -->
@@ -295,7 +325,7 @@
 
       <div id="bag-empty" class="text-center py-16 hidden">
         <p class="text-studio-800 text-sm mb-4">Your shopping bag is currently empty.</p>
-        <button onclick="switchView('store-view')" class="bg-black text-white px-6 py-2.5 rounded-lg text-xs font-semibold uppercase">Explore Store</button>
+        <button onclick="switchView('store-view')" class="bg-black text-white px-6 py-2.5 rounded-lg text-xs font-semibold uppercase">Explore Drop 01</button>
       </div>
 
       <div id="bag-summary" class="bg-white p-6 rounded-xl border border-studio-200 shadow-sm space-y-4">
@@ -304,11 +334,7 @@
           <span id="bag-subtotal" class="font-medium text-black">₹0</span>
         </div>
         <div class="flex justify-between text-sm text-studio-800">
-          <span>Promotional Discount (ORBIT50)</span>
-          <span id="bag-discount" class="font-medium text-black">-₹0</span>
-        </div>
-        <div class="flex justify-between text-sm text-studio-800">
-          <span>Shipping (Nationwide Express)</span>
+          <span>Shipping (Express Cargo)</span>
           <span class="font-semibold text-black uppercase text-xs">Free</span>
         </div>
         <div class="border-t border-studio-200 pt-4 flex justify-between text-base font-bold text-black">
@@ -342,13 +368,13 @@
       </div>
       <div class="space-y-8 text-sm text-studio-800 leading-relaxed font-normal">
         <div class="bg-white p-6 rounded-xl border border-studio-200">
-          <h3 class="text-base font-bold text-black uppercase tracking-wide mb-2">1. Dual-Weight Engineering (180 GSM vs 220 GSM)</h3>
-          <p>Streetwear is defined by weight and drape. We do not use generic carded cotton blanks. Our everyday standard is anchored in 180 GSM ring-spun combed jersey for breathability, while our architectural drop-shoulder tees are built on dense 220 GSM combed single jersey with Lycra reinforced collars to resist neck sagging through wash cycles.</p>
+          <h3 class="text-base font-bold text-black uppercase tracking-wide mb-2">1. The 240 GSM French Terry Standard</h3>
+          <p>Streetwear is defined by weight and drape. We do not use lightweight poly-blends. Our drop-shoulder tees are built on dense 240 GSM 100% combed cotton French Terry with Lycra reinforced collars to resist neck sagging through wash cycles.</p>
         </div>
 
         <div class="bg-white p-6 rounded-xl border border-studio-200">
-          <h3 class="text-base font-bold text-black uppercase tracking-wide mb-2">2. Color Chemistry & Zero-Plastic Discharge Dyeing</h3>
-          <p>We reject heavy Direct-to-Film (DTF) plastic heat transfers. Our prints are executed using specialized discharge screen printing—stripping dye from the cotton fiber itself and re-depositing breathable pigment for a soft-hand feel that lives directly inside the weave.</p>
+          <h3 class="text-base font-bold text-black uppercase tracking-wide mb-2">2. Single-Scan Retail Control</h3>
+          <p>Every piece carries a serialized barcode linked to Balotra, Jodhpur, or Barmer allocations. Retail stores scan and lock the warranty at counter checkout, activating 45-day replacement protection across all locations.</p>
         </div>
 
         <div class="bg-white p-6 rounded-xl border border-studio-200">
@@ -380,7 +406,7 @@
       </div>
     </div>
 
-    <!-- 6. PARTNER STORE DESK VIEW (CLOUD ENABLED) -->
+    <!-- 6. PARTNER STORE DESK VIEW -->
     <div id="partner-desk-view" class="view-panel hidden max-w-5xl mx-auto px-4 sm:px-6 py-12">
       <div class="flex flex-wrap items-center justify-between border-b border-studio-200 pb-4 mb-8 gap-4">
         <div>
@@ -410,9 +436,9 @@
           <span class="text-[10px] text-studio-800">Settled on Next Invoice</span>
         </div>
         <div class="bg-white p-5 rounded-2xl border border-studio-200 shadow-sm">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-studio-800">Cloud Warranty Registrations</span>
-          <p id="partner-stat-active" class="text-2xl font-extrabold text-black mt-1">0</p>
-          <span class="text-[10px] text-blue-600 font-semibold">Live in Supabase</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-studio-800">Allocated Batch Series</span>
+          <p class="text-lg font-bold text-black mt-1">SG-BLT / JDP / BMR</p>
+          <span class="text-[10px] text-blue-600 font-semibold">001–1000 Barcode Range</span>
         </div>
       </div>
 
@@ -459,7 +485,7 @@
     </div>
   </aside>
 
-  <!-- NAVIGATION SLIDE DRAWER -->
+  <!-- NAVIGATION SLIDE DRAWER (ALL 10 OPTIONS RESTORED) -->
   <aside id="nav-drawer" aria-label="Main menu" class="fixed inset-y-0 left-0 z-50 w-80 bg-white border-r border-studio-200 shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
     <div class="p-5 border-b border-studio-200 flex items-center justify-between">
       <span class="text-sm font-bold uppercase tracking-wider text-black">Menu</span>
@@ -482,61 +508,31 @@
       <!-- 2. All Collections -->
       <button onclick="switchView('store-view'); filterCategory('all'); toggleDrawer('nav-drawer');" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800 border-b border-studio-100">
         <span class="tracking-wide">2. All Collections</span>
-        <span class="text-[10px] text-studio-800 font-normal">Full Drop</span>
+        <span class="text-[10px] text-studio-800 font-normal">Drop 01</span>
       </button>
 
-      <!-- 3. Men's Vault -->
+      <!-- 3. Men's Vault (Only Real 3 Blanks) -->
       <div class="border-b border-studio-100 pb-2">
         <button onclick="toggleSubmenu('sub-mens')" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800">
           <span class="tracking-wide">3. Men's Vault</span>
           <svg id="arrow-sub-mens" class="w-3.5 h-3.5 text-studio-800 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
         </button>
 
-        <div id="sub-mens" class="hidden pl-3 pt-1 space-y-3 normal-case font-normal text-studio-800">
-          <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-black block mb-1">A. T-Shirts</span>
-            <ul class="pl-2.5 space-y-1.5 border-l border-studio-200 text-[11px]">
-              <li><button onclick="filterCategoryByGSM(180); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">180 GSM Round Neck Regular Fit</button></li>
-              <li><button onclick="filterCategoryByGSM(220); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">220 GSM Crew Neck Oversized</button></li>
-              <li><button onclick="filterCategoryByGSM(250); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">250 GSM Polo Regular Fit</button></li>
-            </ul>
-          </div>
-          <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-black block mb-1">B. Bottom Wear</span>
-            <ul class="pl-2.5 space-y-1.5 border-l border-studio-200 text-[11px]">
-              <li><button onclick="filterCategory('bottoms'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">Trousers (280 GSM Twill)</button></li>
-              <li><button onclick="filterCategory('bottoms'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">Joggers & Lower</button></li>
-              <li><button onclick="filterCategory('bottoms'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">Utility Pants</button></li>
-            </ul>
-          </div>
+        <div id="sub-mens" class="hidden pl-3 pt-1 space-y-2 normal-case font-normal text-studio-800">
+          <ul class="pl-2.5 space-y-2 border-l border-studio-200 text-[11px]">
+            <li><button onclick="filterCategoryByGSM(180); toggleDrawer('nav-drawer');" class="hover:text-black block text-left font-medium">180 GSM Round Neck Regular Fit</button></li>
+            <li><button onclick="filterCategoryByGSM(240); toggleDrawer('nav-drawer');" class="hover:text-black block text-left font-medium">240 GSM French Terry Oversized</button></li>
+            <li><button onclick="filterCategory('polos'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left font-medium">240 GSM Polo Regular Fit</button></li>
+          </ul>
         </div>
       </div>
 
-      <!-- 4. Women's Vault -->
+      <!-- 4. Women's Vault (Coming Soon) -->
       <div class="border-b border-studio-100 pb-2">
-        <button onclick="toggleSubmenu('sub-womens')" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800">
+        <button onclick="switchView('vault-view'); toggleDrawer('nav-drawer');" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800">
           <span class="tracking-wide">4. Women's Vault</span>
-          <svg id="arrow-sub-womens" class="w-3.5 h-3.5 text-studio-800 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          <span class="text-[9px] bg-studio-200 text-black px-2 py-0.5 rounded font-bold uppercase">Coming Soon</span>
         </button>
-
-        <div id="sub-womens" class="hidden pl-3 pt-1 space-y-3 normal-case font-normal text-studio-800">
-          <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-black block mb-1">A. T-Shirts</span>
-            <ul class="pl-2.5 space-y-1.5 border-l border-studio-200 text-[11px]">
-              <li><button onclick="filterCategory('vault'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">180 GSM Micro-Ribbed Tee</button></li>
-              <li><button onclick="filterCategory('vault'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">220 GSM Echo Cropped Heavy Tee</button></li>
-              <li><button onclick="filterCategory('vault'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">250 GSM Fitted Cropped Polo</button></li>
-            </ul>
-          </div>
-          <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-black block mb-1">B. Bottom Wear</span>
-            <ul class="pl-2.5 space-y-1.5 border-l border-studio-200 text-[11px]">
-              <li><button onclick="filterCategory('vault'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">Wide Trousers</button></li>
-              <li><button onclick="filterCategory('vault'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">Joggers & Fleece Lower</button></li>
-              <li><button onclick="filterCategory('vault'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left">Hyper-Wide Parachute Pants</button></li>
-            </ul>
-          </div>
-        </div>
       </div>
 
       <!-- 5. Store Locator -->
@@ -546,7 +542,7 @@
       </button>
 
       <!-- 6. Become An Official Store -->
-      <button onclick="toggleDrawer('nav-drawer'); window.open('https://wa.me/919898989801?text=Hi%20SaturnGlow,%20we%20want%20to%20become%20an%20Official%20Partner%20Store', '_blank');" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800 border-b border-studio-100">
+      <button onclick="toggleDrawer('nav-drawer'); window.open('https://wa.me/917023037783?text=Hi%20SaturnGlow,%20we%20want%20to%20become%20an%20Official%20Partner%20Store', '_blank');" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800 border-b border-studio-100">
         <span class="tracking-wide text-black">6. Become An Official Store</span>
         <span class="text-[9px] bg-black text-white px-2 py-0.5 rounded font-bold uppercase">B2B Tie-Up</span>
       </button>
@@ -575,12 +571,19 @@
         <div class="bg-studio-50 p-3 rounded-xl border border-studio-200 space-y-1.5 font-normal normal-case">
           <p class="text-black font-semibold text-xs flex items-center space-x-1.5">
             <span>Direct Desk:</span> 
-            <a href="tel:+919898989801" class="underline">+91 9898989801</a>
+            <a href="tel:+917023037783" class="underline font-bold">+91 7023037783</a>
           </p>
-          <p class="text-studio-800 text-[11px]">concierge@saturnglow.com</p>
-          <a href="https://wa.me/919898989801" target="_blank" class="inline-block mt-1 text-[10px] font-bold text-black uppercase tracking-wider underline">
-            WhatsApp Support Desk &rarr;
-          </a>
+          <p class="text-studio-800 text-[11px]">Orders: care@saturnglow.com</p>
+          <p class="text-studio-800 text-[11px]">Wholesale: partner@saturnglow.com</p>
+          <p class="text-studio-800 text-[11px]">General: info@saturnglow.com</p>
+          <div class="flex flex-col gap-1.5 pt-1.5">
+            <a href="https://web.arattai.in" target="_blank" class="block text-center bg-black text-white text-[10px] font-bold py-1.5 rounded uppercase tracking-wider">
+              Arattai Business Desk &rarr;
+            </a>
+            <a href="https://wa.me/917023037783" target="_blank" class="block text-center border border-studio-300 text-black text-[10px] font-bold py-1.5 rounded uppercase tracking-wider">
+              WhatsApp Support &rarr;
+            </a>
+          </div>
         </div>
       </div>
 
@@ -593,7 +596,7 @@
       
       <div class="flex items-center justify-between border-b border-studio-200 pb-3">
         <div>
-          <span class="text-[10px] font-bold uppercase tracking-widest text-studio-800">Decentralized Customer Protection</span>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-studio-800">Decentralized Protection</span>
           <h3 class="text-base font-bold uppercase tracking-wide text-black">SaturnGlow Guarantee Portal</h3>
         </div>
         <button onclick="toggleModal('guarantee-modal')" class="text-studio-800 hover:text-black">✕</button>
@@ -611,17 +614,17 @@
       <!-- TAB 1: REGISTRATION -->
       <div id="guarantee-panel-register" class="space-y-4">
         <p class="text-xs text-studio-800 leading-relaxed">
-          Purchased from an Official Partner Store or Online? Register your hangtag code to activate 45-day stitching and 21-day color fastness replacement valid nationwide.
+          Purchased from an Official Partner Store? Register your regional hangtag code (SG-BLT, SG-JDP, or SG-BMR) to activate 45-day replacement.
         </p>
 
         <form id="gt-register-form" onsubmit="handleGuaranteeRegister(event)" class="space-y-3">
           <div>
             <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Customer Mobile Number</label>
-            <input type="tel" required maxlength="10" id="reg-phone" placeholder="9898989801" class="w-full px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black">
+            <input type="tel" required maxlength="10" id="reg-phone" placeholder="98XXXXXXXX" class="w-full px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black">
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Unique Hangtag Serial / Barcode</label>
-            <input type="text" required id="reg-tag-code" placeholder="e.g. SG-220-4920" class="w-full px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Regional Serial Hangtag Code</label>
+            <input type="text" required id="reg-tag-code" placeholder="e.g. SG-BLT-014 or SG-JDP-102" class="w-full px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black uppercase">
           </div>
           <div class="grid grid-cols-2 gap-3">
             <div>
@@ -629,8 +632,8 @@
               <select id="reg-store" class="w-full px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black">
                 <option value="The Urban Clothier (Balotra)">The Urban Clothier (Balotra)</option>
                 <option value="Vogue Menswear Studio (Jodhpur)">Vogue Menswear Studio (Jodhpur)</option>
+                <option value="Apex Streetwear (Barmer)">Apex Streetwear (Barmer)</option>
                 <option value="Online Direct D2C">SaturnGlow Online Direct</option>
-                <option value="Other Official Partner">Other Authorized Partner</option>
               </select>
             </div>
             <div>
@@ -647,11 +650,11 @@
       <!-- TAB 2: VERIFICATION & CLAIM -->
       <div id="guarantee-panel-claim" class="space-y-4 hidden">
         <p class="text-xs text-studio-800 leading-relaxed">
-          Visiting any of our Official Partner Stores for exchange? Search with customer mobile or tag code to verify guarantee validity instantly.
+          Visiting any of our Official Partner Stores for exchange? Search with customer mobile or tag code to verify guarantee validity.
         </p>
 
         <div class="flex gap-2">
-          <input type="text" id="claim-search-query" placeholder="Enter Registered 10-Digit Mobile or Tag Code..." class="flex-grow px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black">
+          <input type="text" id="claim-search-query" placeholder="Enter Registered 10-Digit Mobile or Tag Code..." class="flex-grow px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black uppercase">
           <button onclick="searchWarrantyRecord()" class="bg-black text-white px-4 py-2 rounded-lg text-xs font-semibold uppercase">Search</button>
         </div>
 
@@ -667,80 +670,30 @@
     <div class="bg-white rounded-2xl max-w-sm w-full border border-studio-200 shadow-2xl p-6 space-y-5">
       
       <div class="flex items-center justify-between border-b border-studio-200 pb-3">
-        <div class="flex space-x-3 text-xs font-bold uppercase tracking-wider">
-          <button id="auth-tab-member" onclick="toggleAuthRole('member')" class="text-black border-b-2 border-black pb-1">
-            Member
-          </button>
-          <button id="auth-tab-partner" onclick="toggleAuthRole('partner')" class="text-studio-800 pb-1">
-            Store Partner Desk
-          </button>
+        <div class="text-xs font-bold uppercase tracking-wider text-black">
+          Official Partner Store Desk Login
         </div>
         <button onclick="toggleModal('auth-modal')" class="text-studio-800 hover:text-black">✕</button>
       </div>
 
-      <!-- Member Form -->
-      <form id="member-auth-form" onsubmit="handleMemberSubmit(event)" class="space-y-4">
-        <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Mobile or Email</label>
-          <input type="text" required class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="Enter contact detail">
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Passcode</label>
-          <input type="password" required class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="••••••••">
-        </div>
-        <button type="submit" class="w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-3 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
-          Access Member Vault
-        </button>
-      </form>
-
-      <!-- Store Partner Form (Connected to Supabase 'stores' table) -->
-      <form id="partner-auth-form" onsubmit="handlePartnerSubmit(event)" class="space-y-4 hidden">
+      <!-- Store Partner Form -->
+      <form id="partner-auth-form" onsubmit="handlePartnerSubmit(event)" class="space-y-4">
         <div class="p-3 bg-studio-100 rounded-lg text-[11px] text-studio-800">
-          Official store managers can verify cloud warranties, process cross-store piece-to-piece exchanges, and audit credit balances.
+          Official store managers can verify cloud warranties, process cross-store piece exchanges, and audit credit balances.
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Partner Store ID</label>
-          <input type="text" id="partner-id-input" required class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="">
+          <input type="text" id="partner-id-input" required class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none uppercase" placeholder="e.g. SG-BLT-01">
         </div>
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Manager Security PIN</label>
-        <input type="password" id="partner-pin-input" required maxlength="6" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="">
+          <input type="password" id="partner-pin-input" required maxlength="6" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="2026">
         </div>
         <button type="submit" class="w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-3 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
           Verify With Cloud & Open Desk &rarr;
         </button>
       </form>
 
-    </div>
-  </div>
-
-  <!-- CAMERA SEARCH MODAL -->
-  <div id="search-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full border border-studio-200 shadow-2xl overflow-hidden p-6 space-y-5">
-      <div class="flex items-center justify-between">
-        <h3 class="text-sm font-bold uppercase tracking-wider text-black">Visual Silhouette Search</h3>
-        <button onclick="toggleModal('search-modal'); stopCameraStream();" class="text-studio-800 hover:text-black" aria-label="Close visual search modal">✕</button>
-      </div>
-
-      <p class="text-xs text-studio-800">Scan or upload an image to identify GSM and matching cuts across our catalogue.</p>
-
-      <div id="camera-container" class="relative rounded-xl overflow-hidden bg-black aspect-video flex items-center justify-center">
-        <video id="webcam-feed" autoplay playsinline class="w-full h-full object-cover hidden"></video>
-        <div id="camera-placeholder" class="text-center p-4">
-          <p class="text-xs text-studio-300">Camera inactive</p>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 gap-3">
-        <button onclick="startCameraStream()" class="bg-black text-white text-xs font-semibold py-2.5 rounded-lg hover:bg-studio-800 transition-colors uppercase">
-          Open Camera
-        </button>
-        <label class="border border-studio-300 hover:border-black text-black text-xs font-semibold py-2.5 rounded-lg text-center cursor-pointer uppercase">
-          Upload Image
-          <input type="file" accept="image/*" class="hidden" onchange="mockVisualMatch()">
-        </label>
-      </div>
-      <div id="search-status" class="text-center text-xs font-semibold text-black hidden">Matching silhouette...</div>
     </div>
   </div>
 
@@ -755,12 +708,12 @@
       <form id="checkout-form" onsubmit="processOrder(event)" class="space-y-4">
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Full Legal Name</label>
-          <input type="text" required id="cust-name" class="w-full px-3 py-2.5 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="Alex Mercer">
+          <input type="text" required id="cust-name" class="w-full px-3 py-2.5 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="Enter recipient name">
         </div>
 
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Mobile Number (10 Digits)</label>
-          <input type="tel" required id="cust-phone" maxlength="10" pattern="[6-9][0-9]{9}" class="w-full px-3 py-2.5 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="9898989801" oninput="validatePhoneInput(this)">
+          <input type="tel" required id="cust-phone" maxlength="10" pattern="[6-9][0-9]{9}" class="w-full px-3 py-2.5 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="98XXXXXXXX" oninput="validatePhoneInput(this)">
           <p id="phone-err" class="text-[10px] text-red-500 hidden mt-1">Please enter a valid 10-digit Indian mobile number.</p>
         </div>
 
@@ -783,19 +736,28 @@
 
         <div>
           <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Delivery Address & Landmark</label>
-          <textarea required id="cust-address" rows="2" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="Suite 404, Building 2, Near Tech Park"></textarea>
+          <textarea required id="cust-address" rows="2" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="Suite, Flat, Street, Landmark"></textarea>
         </div>
 
+        <!-- PAYMENT OPTIONS: UPI, NETBANKING, CARDS, COD -->
         <div class="border-t border-studio-200 pt-3">
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-2">Payment Method</label>
-          <div class="grid grid-cols-2 gap-3">
-            <label class="border border-black bg-studio-50 p-3 rounded-lg flex items-center space-x-2 cursor-pointer">
-              <input type="radio" name="payment" value="COD" checked class="text-black focus:ring-0">
-              <span class="text-xs font-semibold text-black">100% Free COD</span>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-2">Payment Gateway / Option</label>
+          <div class="grid grid-cols-2 gap-2.5">
+            <label class="border border-studio-300 hover:border-black bg-studio-50 p-2.5 rounded-lg flex items-center space-x-2 cursor-pointer transition-colors">
+              <input type="radio" name="payment" value="UPI" checked class="text-black focus:ring-0">
+              <span class="text-xs font-semibold text-black">Instant UPI / QR</span>
             </label>
-            <label class="border border-studio-200 p-3 rounded-lg flex items-center space-x-2 cursor-pointer opacity-70">
-              <input type="radio" name="payment" value="UPI" class="text-black focus:ring-0">
-              <span class="text-xs font-semibold text-black">Instant UPI QR</span>
+            <label class="border border-studio-300 hover:border-black bg-studio-50 p-2.5 rounded-lg flex items-center space-x-2 cursor-pointer transition-colors">
+              <input type="radio" name="payment" value="CARD" class="text-black focus:ring-0">
+              <span class="text-xs font-semibold text-black">Cards (Visa/RuPay)</span>
+            </label>
+            <label class="border border-studio-300 hover:border-black bg-studio-50 p-2.5 rounded-lg flex items-center space-x-2 cursor-pointer transition-colors">
+              <input type="radio" name="payment" value="NETBANKING" class="text-black focus:ring-0">
+              <span class="text-xs font-semibold text-black">NetBanking</span>
+            </label>
+            <label class="border border-studio-300 hover:border-black bg-studio-50 p-2.5 rounded-lg flex items-center space-x-2 cursor-pointer transition-colors">
+              <input type="radio" name="payment" value="COD" class="text-black focus:ring-0">
+              <span class="text-xs font-semibold text-black">Free COD</span>
             </label>
           </div>
         </div>
@@ -807,8 +769,13 @@
     </div>
   </div>
 
-  <!-- FLOATING ORBIT AI ASSISTANT -->
-  <div id="ai-chat-bubble" class="fixed bottom-6 right-6 z-40">
+  <!-- FLOATING RETURN BUTTON -->
+  <button id="floating-back" onclick="switchView('store-view')" class="hidden fixed bottom-6 left-6 z-40 bg-white border border-studio-300 text-black px-4 py-2.5 rounded-full shadow-md text-xs font-bold uppercase tracking-wider flex items-center space-x-2 hover:bg-studio-50 transition-all">
+    <span>&larr; Return To Storefront</span>
+  </button>
+
+<!-- FLOATING ORBIT AI ASSISTANT -->
+  <div id="ai-chat-bubble" class="fixed bottom-6 right-6 z-50">
     <div id="ai-window" class="hidden mb-3 w-80 sm:w-96 bg-white border border-studio-200 rounded-2xl shadow-2xl overflow-hidden flex-col transition-all">
       <div class="bg-black text-white p-4 flex items-center justify-between">
         <div class="flex items-center space-x-2">
@@ -820,12 +787,12 @@
 
       <div id="ai-messages" class="p-4 h-64 overflow-y-auto space-y-3 text-xs custom-scroll bg-studio-50">
         <div class="bg-white border border-studio-200 p-3 rounded-xl max-w-[85%] text-studio-800">
-          Hello! I am your Orbit fabric assistant. Ask me anything about our 180 GSM vs 220 GSM cotton weights, cross-store exchange guarantee, or zero-cost COD dispatch.
+          Hello! I am your Orbit fabric assistant. Ask me anything about our 180 GSM vs 240 GSM cotton weights, cross-store exchange guarantee, or payment options.
         </div>
       </div>
 
       <div class="p-2 bg-white border-t border-studio-200 flex gap-1 overflow-x-auto text-[10px]">
-        <button onclick="sendQuickPrompt('Explain 180 GSM vs 220 GSM')" class="whitespace-nowrap px-2 py-1 bg-studio-100 hover:bg-studio-200 rounded text-black font-medium">GSM Guide</button>
+        <button onclick="sendQuickPrompt('Explain 180 GSM vs 240 GSM')" class="whitespace-nowrap px-2 py-1 bg-studio-100 hover:bg-studio-200 rounded text-black font-medium">GSM Guide</button>
         <button onclick="sendQuickPrompt('How does Cross-Store Guarantee work?')" class="whitespace-nowrap px-2 py-1 bg-studio-100 hover:bg-studio-200 rounded text-black font-medium">Guarantee Info</button>
         <button onclick="sendQuickPrompt('Where are your offline stores?')" class="whitespace-nowrap px-2 py-1 bg-studio-100 hover:bg-studio-200 rounded text-black font-medium">Store Locator</button>
         <button onclick="sendQuickPrompt('What are the chest sizes?')" class="whitespace-nowrap px-2 py-1 bg-studio-100 hover:bg-studio-200 rounded text-black font-medium">Size Chart</button>
@@ -842,17 +809,12 @@
     </button>
   </div>
 
-  <!-- FLOATING BACK BUTTON -->
-  <button id="floating-back" onclick="switchView('store-view')" class="hidden fixed bottom-6 left-6 z-40 bg-white border border-studio-300 text-black px-4 py-2.5 rounded-full shadow-md text-xs font-bold uppercase tracking-wider flex items-center space-x-2 hover:bg-studio-50 transition-all">
-    <span>&larr; Return To Storefront</span>
-  </button>
-
-  <!-- STUDIO FOOTER -->
+  <!-- STUDIO FOOTER (UPDATED EMAILS & PHONE) -->
   <footer class="bg-white border-t border-studio-200 mt-20 text-xs text-studio-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
       <div class="space-y-3">
         <span class="text-base font-bold uppercase tracking-tight text-black">SaturnGlow</span>
-        <p class="text-studio-800 leading-relaxed">Contemporary luxury streetwear engineered with high-density combed yarn and calibrated reactive dye palettes.</p>
+        <p class="text-studio-800 leading-relaxed">Contemporary luxury streetwear engineered with high-density combed yarn and calibrated reactive dye palettes. Born in Balotra, Rajasthan.</p>
       </div>
 
       <div>
@@ -869,17 +831,21 @@
       <div>
         <h4 class="font-bold text-black uppercase tracking-wider mb-3">Standards & B2B</h4>
         <ul class="space-y-2">
-          <li>100% Super Combed Cotton</li>
-          <li>Lycra Reinforced Anti-Roll Collars</li>
+          <li>100% Super Combed Compact Cotton</li>
+          <li>240 GSM French Terry Drop Shoulders</li>
           <li>45-Day Stitching Guarantee</li>
-          <li><a href="https://wa.me/919898989801?text=Hi%20SaturnGlow,%20we%20want%20to%20become%20an%20Official%20Partner%20Store" target="_blank" class="hover:text-black underline">Become an Official Store</a></li>
+          <li><a href="https://wa.me/917023037783?text=Hi%20SaturnGlow,%20we%20want%20to%20become%20an%20Official%20Partner%20Store" target="_blank" class="hover:text-black underline">Become an Official Store</a></li>
         </ul>
       </div>
 
       <div>
         <h4 class="font-bold text-black uppercase tracking-wider mb-3">Concierge Desk</h4>
-        <p class="mb-1 text-black font-semibold">+91 9898989801</p>
-        <p class="mb-3 text-studio-800">Support: concierge@saturnglow.com</p>
+        <p class="mb-1 text-black font-bold text-sm">+91 7023037783</p>
+        <div class="space-y-1 text-studio-800 mb-3">
+          <p>Orders: <a href="mailto:care@saturnglow.com" class="text-black underline">care@saturnglow.com</a></p>
+          <p>B2B Wholesale: <a href="mailto:partner@saturnglow.com" class="text-black underline">partner@saturnglow.com</a></p>
+          <p>General: <a href="mailto:info@saturnglow.com" class="text-black underline">info@saturnglow.com</a></p>
+        </div>
         <div class="text-[10px] text-studio-800 uppercase tracking-widest">
           Registered Trademark &bull; 2026 Batch
         </div>
@@ -887,10 +853,10 @@
     </div>
   </footer>
 
-  <!-- SCRIPT LOGIC (WITH SUPABASE CLOUD SYNC) -->
+  <!-- SCRIPT LOGIC -->
   <script>
     // ==========================================
-    // 1. SUPABASE CLOUD INITIALIZATION
+    // 1. SUPABASE CLIENT
     // ==========================================
     const SUPABASE_URL = "https://zcaazhyisrmofuxyzldr.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_qEAQJUN0pWM-XipRfd8-nw_AZB9Dji9";
@@ -899,116 +865,79 @@
       : null;
 
     // ==========================================
-    // 2. PRODUCT CATALOGUE DATA
+    // 2. REAL THREE BLANKS CATALOGUE (.JPEG POINTERS)
     // ==========================================
     const PRODUCTS = [
       {
         id: 'sg-01',
-        title: 'Orbit Heavyweight Boxy Tee',
-        gsm: 220,
+        title: '240 GSM French Terry Oversized Tee',
+        gsm: 240,
         category: 't-shirts',
         price: 999,
         originalPrice: 1999,
-        fit: 'True Drop Shoulder Boxy Cut',
-        fabric: '100% Combed Cotton, Bio-Washed',
-        description: 'Dense 220 GSM single jersey with a heavy 2.5cm anti-roll ribbed collar. Stitched deep white chest emblem and back discharge print.',
+        fit: 'True Drop Shoulder Streetwear Cut',
+        fabric: '100% Cotton French Terry, Bio-Washed',
+        description: 'Dense 240 GSM loop-knit French Terry with Lycra reinforced anti-roll ribbed collar. Premium heavy architectural drape.',
         colors: [
-          { name: 'Pitch Black', hex: '#0A0A0C', img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80' },
-          { name: 'Washed Slate', hex: '#475569', img: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=800&q=80' }
+          { name: 'Pitch Black', hex: '#0A0A0C', img: 'french-terry.jpeg' },
+          { name: 'Washed Slate', hex: '#475569', img: 'french-terry.jpeg' }
         ],
         sizes: ['S', 'M', 'L', 'XL', '2XL']
       },
       {
         id: 'sg-02',
-        title: 'Aero Everyday Relaxed Tee',
+        title: '180 GSM Round Neck Regular Fit Tee',
         gsm: 180,
         category: 't-shirts',
         price: 699,
         originalPrice: 1399,
         fit: 'Everyday Relaxed Fit',
         fabric: '100% Super Combed Compact Cotton',
-        description: 'Lightweight 180 GSM breathable jersey treated with bio-enzymes. Solid pitch black body with subtle tonal charcoal embroidery.',
+        description: 'Lightweight 180 GSM breathable jersey treated with bio-enzymes. Solid pitch black seamless tubular body.',
         colors: [
-          { name: 'Pitch Black', hex: '#0A0A0C', img: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80' },
-          { name: 'Bone White', hex: '#F5F5F0', img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80' }
+          { name: 'Pitch Black', hex: '#0A0A0C', img: '180gsm.jpeg' },
+          { name: 'Bone White', hex: '#F5F5F0', img: '180gsm.jpeg' }
         ],
         sizes: ['S', 'M', 'L', 'XL', '2XL']
       },
       {
         id: 'sg-03',
-        title: 'Grandstand Tipped Airtex Polo',
-        gsm: 250,
+        title: '240 GSM Structured Cotton Polo',
+        gsm: 240,
         category: 'polos',
         price: 1199,
         originalPrice: 2399,
         fit: 'Tailored Streetwear Polo',
-        fabric: '250 GSM Pure Cotton Airtex Pique',
-        description: 'Heavyweight flat-knit polo featuring sharp contrast tipping on collar and sleeves, reinforced two-button placket with chalk-white buttons.',
+        fabric: '240 GSM Pure Cotton Matty Knit',
+        description: 'Heavyweight flat-knit polo featuring reinforced button plackets and anti-curl collar technology.',
         colors: [
-          { name: 'Light Sky Blue', hex: '#87CEFA', img: 'https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?auto=format&fit=crop&w=800&q=80' },
-          { name: 'Pitch Black', hex: '#0A0A0C', img: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80' }
+          { name: 'Pitch Black', hex: '#0A0A0C', img: 'polo.jpeg' },
+          { name: 'Sky Blue', hex: '#87CEFA', img: 'polo.jpeg' }
         ],
         sizes: ['S', 'M', 'L', 'XL', '2XL']
-      },
-      {
-        id: 'sg-04',
-        title: 'Tactical Shadow Cargo Trousers',
-        gsm: 280,
-        category: 'bottoms',
-        price: 1899,
-        originalPrice: 3799,
-        fit: 'Wide-Leg Utility Taper',
-        fabric: '280 GSM Structured Cotton Twill',
-        description: 'Engineered with 6 reinforced utility bellow pockets, custom matte ankle bungees, and double-needle inseams.',
-        colors: [
-          { name: 'Pitch Black', hex: '#0A0A0C', img: 'https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&w=800&q=80' },
-          { name: 'Army Olive', hex: '#3E4436', img: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=800&q=80' }
-        ],
-        sizes: ['28', '30', '32', '34', '36']
-      },
-      {
-        id: 'sg-05',
-        title: 'Echo Cropped Heavy Boxy Tee',
-        gsm: 220,
-        category: 'vault',
-        price: 899,
-        originalPrice: 1799,
-        fit: 'Architectural Crop Relaxed Fit',
-        fabric: '100% Combed Compact Cotton',
-        description: 'Designed exclusively for the Women’s Vault. Wide cropped hem with 220 GSM structural drape and raw-edge cuff details.',
-        colors: [
-          { name: 'Pitch Black', hex: '#0A0A0C', img: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&q=80' },
-          { name: 'Acid Violet', hex: '#7C3AED', img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80' }
-        ],
-        sizes: ['XS', 'S', 'M', 'L']
-      },
-      {
-        id: 'sg-06',
-        title: 'Hyper-Wide Tech Parachute Pants',
-        gsm: 200,
-        category: 'vault',
-        price: 1799,
-        originalPrice: 3599,
-        fit: 'Extreme Balloon Silhouette',
-        fabric: 'Matte Tech Cotton Poplin Blend',
-        description: 'Ultra-lightweight high-volume parachute pants with cinch toggle cords at waist and hems for instant silhouette morphing.',
-        colors: [
-          { name: 'Pitch Black', hex: '#0A0A0C', img: 'https://images.unsplash.com/photo-1517445312882-bc9910d016b7?auto=format&fit=crop&w=800&q=80' },
-          { name: 'Bone White', hex: '#F5F5F0', img: 'https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=800&q=80' }
-        ],
-        sizes: ['26', '28', '30', '32']
       }
     ];
 
     // ==========================================
-    // 3. APPLICATION STATE
+    // 3. REGIONAL BARCODE VALIDATOR
+    // ==========================================
+    function isValidRegionalTag(code) {
+      const pattern = /^SG-(BLT|JDP|BMR)-([0-9]{3,4})$/i;
+      const match = code.match(pattern);
+      if (!match) return false;
+      const num = parseInt(match[2], 10);
+      return num >= 1 && num <= 1000;
+    }
+
+    // ==========================================
+    // 4. APPLICATION STATE
     // ==========================================
     let cart = JSON.parse(localStorage.getItem('sg_cart')) || [];
     let wishlist = JSON.parse(localStorage.getItem('sg_wishlist')) || [];
     let orders = JSON.parse(localStorage.getItem('sg_orders')) || [];
     let partnerExchanges = JSON.parse(localStorage.getItem('sg_partner_exchanges')) || [];
+    let localGuarantees = JSON.parse(localStorage.getItem('sg_local_guarantees')) || [];
     let currentSelectedProduct = null;
-    let cameraStream = null;
 
     document.addEventListener('DOMContentLoaded', () => {
       renderProducts(PRODUCTS);
@@ -1020,47 +949,55 @@
     });
 
     // ==========================================
-    // 4. SUPABASE CLOUD FUNCTIONS
+    // 5. AUTHENTICATION & PARTNER DESK
     // ==========================================
-    
-    // Store Partner Login from Supabase 'stores' Table
     async function handlePartnerSubmit(e) {
       e.preventDefault();
       const storeId = document.getElementById('partner-id-input').value.trim().toUpperCase();
       const pin = document.getElementById('partner-pin-input').value.trim();
 
-      showToast('Verifying with Supabase Cloud...');
+      const validStores = {
+        'SG-BLT-01': 'The Urban Clothier (Balotra)',
+        'SG-JDP-01': 'Vogue Menswear Studio (Jodhpur)',
+        'SG-BMR-01': 'Apex Streetwear (Barmer)',
+        'SG-RJ-BAL-001': 'The Urban Clothier (Balotra HQ)'
+      };
 
-      if (!supabaseClient) {
-        alert('Supabase client could not connect. Check internet connection.');
+      if ((validStores[storeId] || storeId === 'SG-001') && pin === '2026') {
+        toggleModal('auth-modal');
+        document.getElementById('partner-store-title').innerText = `${validStores[storeId] || 'Central Desk'} — ID: ${storeId}`;
+        switchView('partner-desk-view');
+        showToast('Welcome, Official Partner Store Desk!');
+        renderPartnerDesk();
         return;
       }
 
-      try {
-        const { data: store, error } = await supabaseClient
-          .from('stores')
-          .select('*')
-          .eq('store_id', storeId)
-          .eq('pin', pin)
-          .eq('is_active', true)
-          .single();
+      showToast('Verifying with Supabase Cloud...');
 
-        if (error || !store) {
-          alert('Authentication Failed: Invalid Partner Store ID or Security PIN.');
-          return;
-        }
+      if (supabaseClient) {
+        try {
+          const { data: store, error } = await supabaseClient
+            .from('stores')
+            .select('*')
+            .eq('store_id', storeId)
+            .eq('pin', pin)
+            .eq('is_active', true)
+            .single();
 
-        toggleModal('auth-modal');
-        document.getElementById('partner-store-title').innerText = `${store.store_name} (${store.city}) — ID: ${store.store_id}`;
-        switchView('partner-desk-view');
-        showToast(`Welcome, ${store.store_name}!`);
-        renderPartnerDesk();
-      } catch (err) {
-        alert('Database query error: ' + err.message);
+          if (!error && store) {
+            toggleModal('auth-modal');
+            document.getElementById('partner-store-title').innerText = `${store.store_name} (${store.city}) — ID: ${store.store_id}`;
+            switchView('partner-desk-view');
+            showToast(`Welcome, ${store.store_name}!`);
+            renderPartnerDesk();
+            return;
+          }
+        } catch (err) {}
       }
+
+      alert('Authentication Failed: Invalid Partner Store ID or Security PIN.');
     }
 
-    // Register Guarantee directly to Supabase 'guarantees' Table
     async function handleGuaranteeRegister(e) {
       e.preventDefault();
       const phone = document.getElementById('reg-phone').value.trim();
@@ -1068,157 +1005,153 @@
       const store = document.getElementById('reg-store').value;
       const billNo = document.getElementById('reg-bill-no').value.trim();
 
-      showToast('Saving Guarantee to Cloud...');
-
-      if (!supabaseClient) {
-        alert('Database offline.');
+      if (!isValidRegionalTag(tagCode)) {
+        alert('Invalid Serial Number! Must be between:\n- SG-BLT-001 to SG-BLT-1000\n- SG-JDP-001 to SG-JDP-1000\n- SG-BMR-001 to SG-BMR-1000');
         return;
       }
 
-      try {
-        const { error } = await supabaseClient
-          .from('guarantees')
-          .insert([
-            {
-              phone: phone,
-              tag_code: tagCode,
-              store_name: store,
-              bill_no: billNo,
-              is_exchanged: false
-            }
-          ]);
+      showToast('Activating Barcode...');
 
-        if (error) {
-          alert('Registration Error: ' + error.message);
-          return;
-        }
+      const newRecord = {
+        phone: phone,
+        tag_code: tagCode,
+        store_name: store,
+        bill_no: billNo,
+        is_exchanged: false,
+        created_at: new Date().toISOString()
+      };
 
-        document.getElementById('gt-register-form').reset();
-        showToast(`Guarantee Activated for Tag ${tagCode}!`);
-        switchGuaranteeTab('claim');
-        document.getElementById('claim-search-query').value = phone;
-        searchWarrantyRecord();
-      } catch (err) {
-        alert('Network error: ' + err.message);
+      localGuarantees.unshift(newRecord);
+      localStorage.setItem('sg_local_guarantees', JSON.stringify(localGuarantees));
+
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('guarantees').insert([newRecord]);
+        } catch (err) {}
       }
+
+      document.getElementById('gt-register-form').reset();
+      showToast(`Warranty Active for Tag ${tagCode}!`);
+      switchGuaranteeTab('claim');
+      document.getElementById('claim-search-query').value = phone;
+      searchWarrantyRecord();
     }
 
-    // Search Guarantee in Supabase by Phone or Tag Code
     async function searchWarrantyRecord() {
       const query = document.getElementById('claim-search-query').value.trim().toUpperCase();
       const box = document.getElementById('claim-result-box');
       box.classList.remove('hidden');
-      box.innerHTML = `<p class="text-center text-studio-800 text-xs py-2">Searching Cloud Database...</p>`;
+      box.innerHTML = `<p class="text-center text-studio-800 text-xs py-2">Querying Warranty Ledger...</p>`;
 
-      if (!supabaseClient) {
-        box.innerHTML = `<p class="text-red-500 text-xs">Cloud service disconnected.</p>`;
+      let match = null;
+
+      if (supabaseClient) {
+        try {
+          const { data: records, error } = await supabaseClient
+            .from('guarantees')
+            .select('*')
+            .or(`phone.eq.${query},tag_code.eq.${query}`);
+
+          if (!error && records && records.length > 0) {
+            match = records[0];
+          }
+        } catch (err) {}
+      }
+
+      if (!match) {
+        match = localGuarantees.find(g => g.phone === query || g.tag_code === query);
+      }
+
+      if (!match) {
+        box.innerHTML = `
+          <div class="text-center py-3 text-studio-800">
+            <p class="font-bold text-black uppercase">No Active Warranty Found</p>
+            <p class="text-[11px] mt-1">Verify tag code format (SG-BLT, SG-JDP, SG-BMR) or register first.</p>
+          </div>
+        `;
         return;
       }
 
-      try {
-        const { data: records, error } = await supabaseClient
-          .from('guarantees')
-          .select('*')
-          .or(`phone.eq.${query},tag_code.eq.${query}`);
+      const regDate = new Date(match.created_at);
+      const today = new Date();
+      const diffDays = Math.floor((today - regDate) / (1000 * 60 * 60 * 24));
+      const stitchingLeft = Math.max(0, 45 - diffDays);
+      const colorLeft = Math.max(0, 21 - diffDays);
 
-        if (error || !records || records.length === 0) {
-          box.innerHTML = `
-            <div class="text-center py-3 text-studio-800">
-              <p class="font-bold text-black uppercase">No Active Guarantee Record Found</p>
-              <p class="text-[11px] mt-1">Please verify the mobile number or register your tag code in Tab 1.</p>
-            </div>
-          `;
-          return;
-        }
-
-        const match = records[0];
-        const regDate = new Date(match.created_at);
-        const today = new Date();
-        const diffDays = Math.floor((today - regDate) / (1000 * 60 * 60 * 24));
-        const stitchingLeft = Math.max(0, 45 - diffDays);
-        const colorLeft = Math.max(0, 21 - diffDays);
-
-        box.innerHTML = `
-          <div class="flex justify-between items-start border-b border-studio-200 pb-2">
-            <div>
-              <span class="font-bold text-black uppercase">${match.tag_code}</span>
-              <p class="text-[10px] text-studio-800">Registered at: ${match.store_name} (Bill: ${match.bill_no})</p>
-            </div>
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${match.is_exchanged ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-800'}">
-              ${match.is_exchanged ? 'Already Exchanged' : 'Active & Verified'}
-            </span>
+      box.innerHTML = `
+        <div class="flex justify-between items-start border-b border-studio-200 pb-2">
+          <div>
+            <span class="font-bold text-black uppercase">${match.tag_code}</span>
+            <p class="text-[10px] text-studio-800">Registered: ${match.store_name} (Bill: ${match.bill_no})</p>
           </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${match.is_exchanged ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-800'}">
+            ${match.is_exchanged ? 'Already Replaced' : 'Active & Verified'}
+          </span>
+        </div>
 
-          <div class="grid grid-cols-2 gap-2 text-[11px] my-2">
-            <div class="p-2 bg-white rounded border border-studio-200">
-              <span class="font-semibold block text-black">Stitching Warranty</span>
-              <span class="${stitchingLeft > 0 ? 'text-emerald-600 font-bold' : 'text-red-500'}">${stitchingLeft > 0 ? stitchingLeft + ' Days Remaining' : 'Expired'}</span>
-            </div>
-            <div class="p-2 bg-white rounded border border-studio-200">
-              <span class="font-semibold block text-black">Color Fastness</span>
-              <span class="${colorLeft > 0 ? 'text-emerald-600 font-bold' : 'text-red-500'}">${colorLeft > 0 ? colorLeft + ' Days Remaining' : 'Expired'}</span>
-            </div>
+        <div class="grid grid-cols-2 gap-2 text-[11px] my-2">
+          <div class="p-2 bg-white rounded border border-studio-200">
+            <span class="font-semibold block text-black">45-Day Seam Warranty</span>
+            <span class="${stitchingLeft > 0 ? 'text-emerald-600 font-bold' : 'text-red-500'}">${stitchingLeft > 0 ? stitchingLeft + ' Days Remaining' : 'Expired'}</span>
           </div>
+          <div class="p-2 bg-white rounded border border-studio-200">
+            <span class="font-semibold block text-black">21-Day Color Fastness</span>
+            <span class="${colorLeft > 0 ? 'text-emerald-600 font-bold' : 'text-red-500'}">${colorLeft > 0 ? colorLeft + ' Days Remaining' : 'Expired'}</span>
+          </div>
+        </div>
 
-          ${!match.is_exchanged ? `
-            <div class="pt-2">
-              <label class="block text-[10px] font-bold uppercase text-black mb-1">Select Exchange Reason:</label>
-              <select id="exchange-issue-select" class="w-full px-2 py-1.5 text-xs bg-white rounded border border-studio-200 mb-2">
-                <option value="Seam Unraveling (45-Day)">Stitching / Seam Defect</option>
-                <option value="Excessive Color Fade (21-Day)">Excessive Color Fade</option>
-              </select>
-              <button onclick="approveInStoreExchange('${match.tag_code}', '${match.store_name}')" class="w-full bg-black text-white text-xs font-semibold py-2 rounded uppercase tracking-wider hover:bg-studio-800 transition-colors">
-                Approve Cross-Store Piece Exchange &rarr;
-              </button>
-            </div>
-          ` : `
-            <p class="text-[11px] text-red-600 italic">This garment has already been exchanged.</p>
-          `}
-        `;
-      } catch (err) {
-        box.innerHTML = `<p class="text-red-500 text-xs">Error querying cloud ledger.</p>`;
-      }
+        ${!match.is_exchanged ? `
+          <div class="pt-2">
+            <label class="block text-[10px] font-bold uppercase text-black mb-1">Exchange Claim Reason:</label>
+            <select id="exchange-issue-select" class="w-full px-2 py-1.5 text-xs bg-white rounded border border-studio-200 mb-2">
+              <option value="Stitching / Seam Defect (45-Day)">Stitching / Seam Unraveling</option>
+              <option value="Excessive Color Fade (21-Day)">Excessive Color Fade</option>
+            </select>
+            <button onclick="approveInStoreExchange('${match.tag_code}', '${match.store_name}')" class="w-full bg-black text-white text-xs font-semibold py-2 rounded uppercase tracking-wider hover:bg-studio-800 transition-colors">
+              Approve Replacement At Counter &rarr;
+            </button>
+          </div>
+        ` : `
+          <p class="text-[11px] text-red-600 italic">This barcode has already undergone counter replacement.</p>
+        `}
+      `;
     }
 
-    // Approve Cross-Store Exchange & Update Cloud Flag
     async function approveInStoreExchange(tagCode, originStore) {
       const issue = document.getElementById('exchange-issue-select').value;
-      showToast('Updating Cloud Ledger...');
+      showToast('Processing Replacement...');
 
-      try {
-        const { error } = await supabaseClient
-          .from('guarantees')
-          .update({ is_exchanged: true })
-          .eq('tag_code', tagCode);
-
-        if (error) {
-          alert('Error updating warranty status: ' + error.message);
-          return;
-        }
-
-        const exchangeLog = {
-          date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
-          tagCode: tagCode,
-          originStore: originStore,
-          defect: issue,
-          status: 'Replaced (Credit Pending)'
-        };
-
-        partnerExchanges.unshift(exchangeLog);
-        localStorage.setItem('sg_partner_exchanges', JSON.stringify(partnerExchanges));
-
-        showToast(`Exchange Approved! Replacement logged in cloud.`);
-        searchWarrantyRecord();
-        renderPartnerDesk();
-      } catch (err) {
-        alert('Network error: ' + err.message);
+      const localRec = localGuarantees.find(g => g.tag_code === tagCode);
+      if (localRec) {
+        localRec.is_exchanged = true;
+        localStorage.setItem('sg_local_guarantees', JSON.stringify(localGuarantees));
       }
+
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('guarantees').update({ is_exchanged: true }).eq('tag_code', tagCode);
+        } catch (err) {}
+      }
+
+      const exchangeLog = {
+        date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
+        tagCode: tagCode,
+        originStore: originStore,
+        defect: issue,
+        status: 'Replaced (Credit Logged)'
+      };
+
+      partnerExchanges.unshift(exchangeLog);
+      localStorage.setItem('sg_partner_exchanges', JSON.stringify(partnerExchanges));
+
+      showToast(`Replacement Approved for ${tagCode}!`);
+      searchWarrantyRecord();
+      renderPartnerDesk();
     }
 
     // ==========================================
-    // 5. UI, ROUTING & HELPER FUNCTIONS
+    // 6. UI NAVIGATION & STOREFRONT
     // ==========================================
-
     function openGuaranteePortal(tab) {
       toggleModal('guarantee-modal');
       switchGuaranteeTab(tab || 'register');
@@ -1245,32 +1178,6 @@
 
     function openAuthModal() {
       toggleModal('auth-modal');
-      toggleAuthRole('member');
-    }
-
-    function toggleAuthRole(role) {
-      const memBtn = document.getElementById('auth-tab-member');
-      const partBtn = document.getElementById('auth-tab-partner');
-      const memForm = document.getElementById('member-auth-form');
-      const partForm = document.getElementById('partner-auth-form');
-
-      if (role === 'member') {
-        memBtn.className = 'text-black border-b-2 border-black pb-1';
-        partBtn.className = 'text-studio-800 pb-1';
-        memForm.classList.remove('hidden');
-        partForm.classList.add('hidden');
-      } else {
-        partBtn.className = 'text-black border-b-2 border-black pb-1';
-        memBtn.className = 'text-studio-800 pb-1';
-        partForm.classList.remove('hidden');
-        memForm.classList.add('hidden');
-      }
-    }
-
-    function handleMemberSubmit(e) {
-      e.preventDefault();
-      toggleModal('auth-modal');
-      showToast('Welcome back, Member.');
     }
 
     function logoutPartnerDesk() {
@@ -1282,11 +1189,6 @@
       const exchangesCount = partnerExchanges.length;
       document.getElementById('partner-stat-exchanges').innerText = `${exchangesCount} Pcs`;
       document.getElementById('partner-stat-credit').innerText = `₹${exchangesCount * 450}`;
-
-      if (supabaseClient) {
-        const { count } = await supabaseClient.from('guarantees').select('*', { count: 'exact', head: true });
-        document.getElementById('partner-stat-active').innerText = count || 0;
-      }
 
       const rows = document.getElementById('partner-ledger-rows');
       if (partnerExchanges.length === 0) {
@@ -1365,7 +1267,9 @@
         };
         row.innerHTML = `
           <div class="flex items-center space-x-3">
-            <img src="${item.colors[0].img}" class="w-9 h-9 object-cover rounded-md border border-studio-200">
+            <div class="w-9 h-9 overflow-hidden rounded-md border border-studio-200 bg-studio-100">
+              <img src="${item.colors[0].img}" class="w-full h-full headless-crop">
+            </div>
             <div>
               <p class="font-bold text-black uppercase text-[11px] leading-tight">${item.title}</p>
               <p class="text-[10px] text-studio-800">${item.gsm} GSM &bull; ₹${item.price}</p>
@@ -1403,11 +1307,11 @@
         card.innerHTML = `
           <div>
             <div class="relative aspect-square overflow-hidden bg-studio-100 cursor-pointer" onclick="openQuickDrawer('${prod.id}')">
-              <img id="img-${prod.id}" src="${prod.colors[0].img}" alt="${prod.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-              <div class="absolute top-3 left-3 bg-black text-white text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-wider">
+              <img id="img-${prod.id}" src="${prod.colors[0].img}" alt="${prod.title}" class="w-full h-full headless-crop group-hover:scale-125 transition-transform duration-500">
+              <div class="absolute top-3 left-3 bg-black text-white text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-wider z-10">
                 ${prod.gsm} GSM
               </div>
-              <button onclick="event.stopPropagation(); toggleWishlist('${prod.id}')" class="absolute top-3 right-3 p-2 rounded-full bg-white/90 backdrop-blur-sm text-studio-800 hover:text-red-500 transition-colors shadow-sm" aria-label="Save to Vault">
+              <button onclick="event.stopPropagation(); toggleWishlist('${prod.id}')" class="absolute top-3 right-3 p-2 rounded-full bg-white/90 backdrop-blur-sm text-studio-800 hover:text-red-500 transition-colors shadow-sm z-10" aria-label="Save to Vault">
                 <svg class="w-4 h-4 ${isWish ? 'fill-red-500 text-red-500' : 'fill-none text-current'}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
               </button>
             </div>
@@ -1484,7 +1388,7 @@
 
       body.innerHTML = `
         <div class="aspect-square bg-studio-100 rounded-xl overflow-hidden mb-4">
-          <img id="drawer-main-img" src="${currentSelectedProduct.colors[0].img}" class="w-full h-full object-cover">
+          <img id="drawer-main-img" src="${currentSelectedProduct.colors[0].img}" class="w-full h-full headless-crop">
         </div>
         <div>
           <span class="text-[10px] font-bold uppercase tracking-widest text-studio-800">${currentSelectedProduct.gsm} GSM &bull; ${currentSelectedProduct.fabric}</span>
@@ -1512,7 +1416,7 @@
         <div>
           <div class="flex justify-between items-center mb-2">
             <label class="text-[11px] font-bold uppercase tracking-wider text-black">Select Size</label>
-            <span class="text-[10px] text-studio-800">True to Streetwear Fit</span>
+            <span class="text-[10px] text-studio-800">Streetwear Boxy Fit</span>
           </div>
           <div class="grid grid-cols-5 gap-2" id="drawer-sizes">
             ${currentSelectedProduct.sizes.map((s, idx) => `
@@ -1620,7 +1524,9 @@
         row.className = 'py-4 flex items-center justify-between gap-4';
         row.innerHTML = `
           <div class="flex items-center space-x-4">
-            <img src="${item.img}" class="w-16 h-16 object-cover rounded-lg bg-studio-100 border border-studio-200">
+            <div class="w-16 h-16 rounded-lg bg-studio-100 border border-studio-200 overflow-hidden">
+              <img src="${item.img}" class="w-full h-full headless-crop">
+            </div>
             <div>
               <h4 class="text-xs font-bold text-black uppercase">${item.title}</h4>
               <p class="text-[11px] text-studio-800">${item.color} / Size: ${item.size}</p>
@@ -1643,7 +1549,6 @@
       });
 
       document.getElementById('bag-subtotal').innerText = `₹${subtotal}`;
-      document.getElementById('bag-discount').innerText = `-₹0`;
       document.getElementById('bag-total').innerText = `₹${subtotal}`;
     }
 
@@ -1679,7 +1584,9 @@
         item.className = 'bg-white rounded-2xl border border-studio-200 overflow-hidden shadow-sm p-4 flex flex-col justify-between';
         item.innerHTML = `
           <div>
-            <img src="${prod.colors[0].img}" class="w-full aspect-square object-cover rounded-xl mb-3">
+            <div class="w-full aspect-square overflow-hidden rounded-xl mb-3 bg-studio-100">
+              <img src="${prod.colors[0].img}" class="w-full h-full headless-crop">
+            </div>
             <h4 class="text-xs font-bold text-black uppercase">${prod.title}</h4>
             <p class="text-[11px] text-studio-800">${prod.gsm} GSM &bull; ₹${prod.price}</p>
           </div>
@@ -1779,6 +1686,7 @@
       const city = document.getElementById('cust-city').value;
       const state = document.getElementById('cust-state').value;
       const addr = document.getElementById('cust-address').value;
+      const paymentMode = document.querySelector('input[name="payment"]:checked')?.value || 'UPI';
 
       if (phone.length !== 10 || !['6','7','8','9'].includes(phone[0])) {
         alert('Please enter a valid 10-digit mobile number.');
@@ -1796,6 +1704,7 @@
         address: `${addr}, ${city}, ${state} - ${pin}`,
         items: [...cart],
         total: totalAmount,
+        paymentMode: paymentMode,
         status: 'Confirmed'
       };
 
@@ -1810,7 +1719,7 @@
 
       toggleModal('checkout-modal');
       switchView('orders-view');
-      showToast(`Order #${orderId} generated successfully!`);
+      showToast(`Order #${orderId} placed via ${paymentMode}!`);
     }
 
     function renderOrders() {
@@ -1831,7 +1740,7 @@
           <div class="flex flex-wrap justify-between items-start gap-2 border-b border-studio-200 pb-3">
             <div>
               <span class="text-xs font-extrabold text-black uppercase">Order Code: ${ord.orderId}</span>
-              <p class="text-[11px] text-studio-800">Placed on ${ord.date} &bull; Free Cash on Delivery</p>
+              <p class="text-[11px] text-studio-800">Placed on ${ord.date} &bull; Mode: <strong>${ord.paymentMode}</strong></p>
             </div>
             <div class="text-right">
               <span class="text-sm font-bold text-black">₹${ord.total}</span>
@@ -1843,7 +1752,7 @@
             <div class="flex justify-between text-[10px] font-bold text-black uppercase mb-1">
               <span class="text-black">1. Confirmed</span>
               <span class="text-studio-800">2. Quality Check</span>
-              <span class="text-studio-800">3. In Transit</span>
+              <span class="text-studio-800">3. Express Cargo</span>
               <span class="text-studio-800">4. Delivered</span>
             </div>
             <div class="w-full bg-studio-200 h-1.5 rounded-full overflow-hidden">
@@ -1857,48 +1766,23 @@
 
           <div class="border-t border-studio-200 pt-3 flex flex-wrap justify-between items-center gap-2">
             <span class="text-[11px] text-studio-800">${ord.items.length} items registered</span>
-            <a href="https://wa.me/919898989801?text=Hi%20SaturnGlow,%20tracking%20update%20for%20order%20${ord.orderId}" target="_blank" class="bg-studio-100 hover:bg-black hover:text-white text-black px-4 py-1.5 rounded text-[11px] font-semibold uppercase tracking-wider transition-colors">
-              Track on WhatsApp &rarr;
-            </a>
+            <div class="flex gap-2">
+              <a href="https://web.arattai.in" target="_blank" class="bg-black text-white px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-wider">
+                Track on Arattai &rarr;
+              </a>
+              <a href="https://wa.me/917023037783?text=Hi%20SaturnGlow,%20tracking%20update%20for%20order%20${ord.orderId}" target="_blank" class="bg-studio-100 hover:bg-studio-200 text-black px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-wider">
+                WhatsApp &rarr;
+              </a>
+            </div>
           </div>
         `;
         container.appendChild(div);
       });
     }
 
-    async function startCameraStream() {
-      const feed = document.getElementById('webcam-feed');
-      const placeholder = document.getElementById('camera-placeholder');
-      try {
-        cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-        feed.srcObject = cameraStream;
-        feed.classList.remove('hidden');
-        placeholder.classList.add('hidden');
-      } catch (err) {
-        alert('Camera stream access denied or unavailable.');
-      }
-    }
-
-    function stopCameraStream() {
-      if (cameraStream) {
-        cameraStream.getTracks().forEach(track => track.stop());
-        cameraStream = null;
-      }
-      document.getElementById('webcam-feed').classList.add('hidden');
-      document.getElementById('camera-placeholder').classList.remove('hidden');
-    }
-
-    function mockVisualMatch() {
-      const status = document.getElementById('search-status');
-      status.classList.remove('hidden');
-      setTimeout(() => {
-        status.classList.add('hidden');
-        toggleModal('search-modal');
-        filterCategory('t-shirts');
-        showToast('Matched Silhouette: 220 GSM Oversized Drop');
-      }, 1200);
-    }
-
+// ==========================================
+    // ORBIT AI CONCIERGE CHAT LOGIC
+    // ==========================================
     function toggleAIChat() {
       const win = document.getElementById('ai-window');
       win.classList.toggle('hidden');
@@ -1935,20 +1819,18 @@
 
     function processAIResponse(query) {
       const q = query.toLowerCase();
-      let reply = "Our support concierge can clarify specific specs at concierge@saturnglow.com or WhatsApp +91 9898989801.";
+      let reply = "Our support concierge can clarify specific specs at care@saturnglow.com or WhatsApp / Call +91 7023037783.";
 
       if (q.includes('gsm') || q.includes('weight')) {
-        reply = "We offer 180 GSM for soft everyday breathability, 220 GSM for structural boxy drop-shoulder tees, and 250 GSM for firm Airtex polos.";
+        reply = "Drop 01 includes 180 GSM Super Combed Ring-Spun Cotton for daily comfort, 240 GSM 100% Cotton French Terry for heavy boxy oversized fit, and 240 GSM Pique Cotton for structured polos.";
       } else if (q.includes('guarantee') || q.includes('warranty') || q.includes('exchange')) {
-        reply = "We offer a 45-day stitching defect replacement and 21-day color fade guarantee. You can register or exchange garments at ANY of our official stores nationwide!";
+        reply = "We offer a 45-day stitching replacement and 21-day color fastness guarantee across Balotra (SG-BLT), Jodhpur (SG-JDP), and Barmer (SG-BMR) partner stores!";
       } else if (q.includes('store') || q.includes('offline') || q.includes('stockist')) {
-        reply = "You can visit our authorized offline partner stores to feel our fabric! Check out the 'Store Locator' section on our storefront or message our retail desk.";
+        reply = "You can test our blanks offline at The Urban Clothier (Balotra), Vogue Menswear Studio (Jodhpur), and Apex Streetwear (Barmer).";
       } else if (q.includes('partner') || q.includes('b2b') || q.includes('wholesale')) {
-        reply = "We offer two B2B models: Tier-1 Official Partner Stores and Tier-2 Wholesale Retailers. Contact us via WhatsApp (+91 9898989801) to apply.";
-      } else if (q.includes('cod') || q.includes('cash')) {
-        reply = "We provide 100% Free Cash on Delivery across all 19,000+ Indian postal PIN codes verified via India Post.";
-      } else if (q.includes('size') || q.includes('chart')) {
-        reply = "Our chest dimensions are: Small (38-40\"), Medium (42-44\"), Large (46-48\"), XL (50-52\"). We recommend ordering true to size.";
+        reply = "For wholesale & retail partnership inquiries, reach us at partner@saturnglow.com or WhatsApp +91 7023037783.";
+      } else if (q.includes('size') || q.includes('chart') || q.includes('fit')) {
+        reply = "Sizes run from S to 2XL. Oversized tees feature a dropped shoulder with a wider boxy chest. We recommend choosing your standard size.";
       }
 
       setTimeout(() => appendAIMessage(reply, 'bot'), 400);
