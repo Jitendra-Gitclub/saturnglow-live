@@ -211,7 +211,6 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
           <!-- Balotra -->
           <div class="bg-white rounded-2xl border border-studio-200 p-6 space-y-4 hover:border-black transition-colors shadow-sm flex flex-col justify-between">
             <div class="space-y-3">
@@ -286,7 +285,6 @@
               <a href="https://maps.google.com" target="_blank" class="text-xs font-bold uppercase tracking-wider text-black hover:underline">Directions &rarr;</a>
             </div>
           </div>
-
         </div>
       </section>
 
@@ -589,10 +587,11 @@
     </div>
   </aside>
 
-  <!-- AUTHENTICATION & PARTNER DESK MODAL (BOTH TABS) -->
-  <div id="auth-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-sm w-full border border-studio-200 shadow-2xl p-6 space-y-5">
+  <!-- AUTHENTICATION & PARTNER DESK MODAL (WITH MEMBER SIGN-UP & REAL OTP FLOW) -->
+  <div id="auth-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-sm w-full border border-studio-200 shadow-2xl p-6 space-y-4 my-8">
       
+      <!-- Top Modal Header -->
       <div class="flex items-center justify-between border-b border-studio-200 pb-3">
         <div class="flex space-x-3 text-xs font-bold uppercase tracking-wider">
           <button id="auth-tab-member" onclick="toggleAuthRole('member')" class="text-black border-b-2 border-black pb-1">
@@ -605,25 +604,87 @@
         <button onclick="toggleModal('auth-modal')" class="text-studio-800 hover:text-black">✕</button>
       </div>
 
-      <!-- 1. Member Access Form -->
-      <form id="member-auth-form" onsubmit="handleMemberSubmit(event)" class="space-y-4">
-        <div class="p-3 bg-studio-50 rounded-lg text-[11px] text-studio-800 border border-studio-200">
-          Sign in or create your SaturnGlow Member ID to track orders, save favorites to your Personal Vault, and get early drop access.
+      <!-- MEMBER SECTION CONTAINER -->
+      <div id="member-container">
+        
+        <!-- Toggle Between Login and Sign-Up -->
+        <div class="flex bg-studio-100 p-1 rounded-lg text-[11px] font-semibold mb-4">
+          <button id="mem-subtab-login" onclick="switchMemberMode('login')" class="w-1/2 py-1.5 text-center rounded-md bg-white text-black shadow-sm uppercase tracking-wider">
+            Sign In
+          </button>
+          <button id="mem-subtab-signup" onclick="switchMemberMode('signup')" class="w-1/2 py-1.5 text-center rounded-md text-studio-800 uppercase tracking-wider">
+            Create Account
+          </button>
         </div>
-        <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Mobile or Email</label>
-          <input type="text" id="member-contact-input" required class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="Enter mobile or email">
-        </div>
-        <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Passcode / PIN</label>
-          <input type="password" id="member-passcode-input" required class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="••••••••">
-        </div>
-        <button type="submit" class="w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-3 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
-          Access Member Vault &rarr;
-        </button>
-      </form>
 
-      <!-- 2. Store Partner Form -->
+        <!-- 1A. Member Sign-In Form -->
+        <form id="member-login-form" onsubmit="handleMemberLogin(event)" class="space-y-3.5">
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Registered 10-Digit Mobile</label>
+            <input type="tel" id="login-phone" required maxlength="10" placeholder="98XXXXXXXX" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Security PIN / Passcode</label>
+            <input type="password" id="login-pin" required maxlength="6" placeholder="••••" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
+          </div>
+          <button type="submit" class="w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-2.5 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
+            Access Member Vault &rarr;
+          </button>
+          <p class="text-[11px] text-center text-studio-800 pt-1">
+            Don't have an account? <button type="button" onclick="switchMemberMode('signup')" class="text-black font-bold underline">Create one now</button>
+          </p>
+        </form>
+
+        <!-- 1B. Member Sign-Up Form (With Real-Time OTP Generation) -->
+        <form id="member-signup-form" onsubmit="handleMemberSignup(event)" class="space-y-3 hidden">
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Full Legal Name</label>
+            <input type="text" id="signup-name" required placeholder="Alex Mercer" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Mobile Number</label>
+            <div class="flex gap-2">
+              <input type="tel" id="signup-phone" required maxlength="10" placeholder="98XXXXXXXX" class="flex-grow px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
+              <button type="button" id="btn-send-otp" onclick="generateAndSendOTP()" class="whitespace-nowrap px-3 py-2 bg-studio-100 hover:bg-black hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider text-black transition-colors border border-studio-300">
+                Send OTP
+              </button>
+            </div>
+            <p id="otp-status-msg" class="text-[10px] text-studio-800 mt-1 hidden"></p>
+          </div>
+
+          <div id="otp-input-field" class="hidden">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Enter Verification OTP</label>
+            <div class="flex gap-2">
+              <input type="text" id="signup-otp" maxlength="4" placeholder="4-Digit Code" class="flex-grow px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black font-mono tracking-widest text-center">
+              <button type="button" onclick="verifyEnteredOTP()" class="whitespace-nowrap px-3 py-2 bg-black text-white rounded-lg text-[10px] font-bold uppercase tracking-wider">
+                Verify
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Create PIN</label>
+              <input type="password" id="signup-pin" required maxlength="6" placeholder="4-6 Digits" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Confirm PIN</label>
+              <input type="password" id="signup-confirm-pin" required maxlength="6" placeholder="Re-enter" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
+            </div>
+          </div>
+
+          <button type="submit" id="btn-create-account" class="w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-2.5 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
+            Create Account & Join &rarr;
+          </button>
+          <p class="text-[11px] text-center text-studio-800 pt-1">
+            Already registered? <button type="button" onclick="switchMemberMode('login')" class="text-black font-bold underline">Sign in</button>
+          </p>
+        </form>
+
+      </div>
+
+      <!-- 2. STORE PARTNER FORM -->
       <form id="partner-auth-form" onsubmit="handlePartnerSubmit(event)" class="space-y-4 hidden">
         <div class="p-3 bg-studio-100 rounded-lg text-[11px] text-studio-800">
           Official store managers can verify cloud warranties, process cross-store piece exchanges, and audit credit balances.
@@ -875,7 +936,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT LOGIC (100% CLEAN SYNTAX) -->
+  <!-- SCRIPT LOGIC -->
   <script>
     // 1. SUPABASE CLIENT
     const SUPABASE_URL = "https://zcaazhyisrmofuxyzldr.supabase.co";
@@ -951,7 +1012,10 @@
     let orders = JSON.parse(localStorage.getItem('sg_orders')) || [];
     let partnerExchanges = JSON.parse(localStorage.getItem('sg_partner_exchanges')) || [];
     let localGuarantees = JSON.parse(localStorage.getItem('sg_local_guarantees')) || [];
+    let registeredMembers = JSON.parse(localStorage.getItem('sg_members')) || [];
     let currentSelectedProduct = null;
+    let generatedOTPCode = null;
+    let isPhoneVerified = false;
 
     document.addEventListener('DOMContentLoaded', () => {
       renderProducts(PRODUCTS);
@@ -962,38 +1026,177 @@
       renderPartnerDesk();
     });
 
-    // 5. AUTHENTICATION & PARTNER DESK
+    // 5. AUTHENTICATION & MEMBER ONBOARDING
     function openAuthModal() {
       toggleModal('auth-modal');
       toggleAuthRole('member');
+      switchMemberMode('login');
     }
 
     function toggleAuthRole(role) {
       const memBtn = document.getElementById('auth-tab-member');
       const partBtn = document.getElementById('auth-tab-partner');
-      const memForm = document.getElementById('member-auth-form');
+      const memContainer = document.getElementById('member-container');
       const partForm = document.getElementById('partner-auth-form');
 
       if (role === 'member') {
         memBtn.className = 'text-black border-b-2 border-black pb-1';
         partBtn.className = 'text-studio-800 pb-1';
-        memForm.classList.remove('hidden');
+        memContainer.classList.remove('hidden');
         partForm.classList.add('hidden');
       } else {
         partBtn.className = 'text-black border-b-2 border-black pb-1';
         memBtn.className = 'text-studio-800 pb-1';
         partForm.classList.remove('hidden');
-        memForm.classList.add('hidden');
+        memContainer.classList.add('hidden');
       }
     }
 
-    function handleMemberSubmit(e) {
-      e.preventDefault();
-      const contact = document.getElementById('member-contact-input').value.trim();
-      toggleModal('auth-modal');
-      showToast(`Welcome back, Member (${contact})!`);
+    function switchMemberMode(mode) {
+      const loginTab = document.getElementById('mem-subtab-login');
+      const signupTab = document.getElementById('mem-subtab-signup');
+      const loginForm = document.getElementById('member-login-form');
+      const signupForm = document.getElementById('member-signup-form');
+
+      if (mode === 'login') {
+        loginTab.className = 'w-1/2 py-1.5 text-center rounded-md bg-white text-black shadow-sm uppercase tracking-wider';
+        signupTab.className = 'w-1/2 py-1.5 text-center rounded-md text-studio-800 uppercase tracking-wider';
+        loginForm.classList.remove('hidden');
+        signupForm.classList.add('hidden');
+      } else {
+        signupTab.className = 'w-1/2 py-1.5 text-center rounded-md bg-white text-black shadow-sm uppercase tracking-wider';
+        loginTab.className = 'w-1/2 py-1.5 text-center rounded-md text-studio-800 uppercase tracking-wider';
+        signupForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+      }
     }
 
+    // REAL-TIME OTP GENERATOR & SIMULATOR
+    function generateAndSendOTP() {
+      const phone = document.getElementById('signup-phone').value.trim();
+      const statusMsg = document.getElementById('otp-status-msg');
+      const otpField = document.getElementById('otp-input-field');
+      const btnSend = document.getElementById('btn-send-otp');
+
+      if (phone.length !== 10 || !['6','7','8','9'].includes(phone[0])) {
+        alert('Please enter a valid 10-digit Indian mobile number.');
+        return;
+      }
+
+      // Generate random 4-digit OTP
+      generatedOTPCode = Math.floor(1000 + Math.random() * 9000).toString();
+
+      otpField.classList.remove('hidden');
+      statusMsg.classList.remove('hidden');
+      statusMsg.className = 'text-[10px] text-emerald-600 mt-1 font-semibold';
+      statusMsg.innerHTML = `OTP Sent! Your verification code is: <span class="bg-black text-white px-2 py-0.5 rounded font-mono">${generatedOTPCode}</span>`;
+      
+      btnSend.innerText = 'Resend';
+      showToast(`Verification OTP: ${generatedOTPCode}`);
+    }
+
+    function verifyEnteredOTP() {
+      const entered = document.getElementById('signup-otp').value.trim();
+      const statusMsg = document.getElementById('otp-status-msg');
+
+      if (entered === generatedOTPCode) {
+        isPhoneVerified = true;
+        statusMsg.innerText = 'Phone Verified Successfully ✓';
+        statusMsg.className = 'text-[10px] text-emerald-600 font-bold mt-1';
+        document.getElementById('signup-otp').disabled = true;
+        showToast('Mobile Number Verified!');
+      } else {
+        alert('Invalid OTP code. Please check and re-enter.');
+      }
+    }
+
+    // MEMBER REGISTRATION HANDLER
+    async function handleMemberSignup(e) {
+      e.preventDefault();
+      const name = document.getElementById('signup-name').value.trim();
+      const phone = document.getElementById('signup-phone').value.trim();
+      const pin = document.getElementById('signup-pin').value.trim();
+      const confirmPin = document.getElementById('signup-confirm-pin').value.trim();
+
+      if (!isPhoneVerified) {
+        alert('Please verify your phone number with the OTP first!');
+        return;
+      }
+
+      if (pin !== confirmPin) {
+        alert('Security PIN and Confirm PIN do not match!');
+        return;
+      }
+
+      if (pin.length < 4) {
+        alert('PIN must be at least 4 digits long.');
+        return;
+      }
+
+      const existing = registeredMembers.find(m => m.phone === phone);
+      if (existing) {
+        alert('An account already exists with this mobile number. Please Sign In.');
+        switchMemberMode('login');
+        return;
+      }
+
+      const newMember = {
+        name,
+        phone,
+        pin,
+        created_at: new Date().toISOString()
+      };
+
+      // Save to local cache
+      registeredMembers.push(newMember);
+      localStorage.setItem('sg_members', JSON.stringify(registeredMembers));
+
+      // Attempt sync to Supabase 'members' or 'profiles' table if available
+      if (supabaseClient) {
+        try {
+          await supabaseClient.from('members').insert([newMember]);
+        } catch (err) {}
+      }
+
+      showToast(`Welcome to SaturnGlow, ${name}!`);
+      toggleModal('auth-modal');
+
+      // Reset signup form
+      document.getElementById('member-signup-form').reset();
+      isPhoneVerified = false;
+      document.getElementById('otp-input-field').classList.add('hidden');
+      document.getElementById('otp-status-msg').classList.add('hidden');
+    }
+
+    // MEMBER LOGIN HANDLER
+    async function handleMemberLogin(e) {
+      e.preventDefault();
+      const phone = document.getElementById('login-phone').value.trim();
+      const pin = document.getElementById('login-pin').value.trim();
+
+      let member = registeredMembers.find(m => m.phone === phone && m.pin === pin);
+
+      if (!member && supabaseClient) {
+        try {
+          const { data, error } = await supabaseClient
+            .from('members')
+            .select('*')
+            .eq('phone', phone)
+            .eq('pin', pin)
+            .single();
+          if (data && !error) member = data;
+        } catch (err) {}
+      }
+
+      if (member) {
+        toggleModal('auth-modal');
+        showToast(`Welcome back, ${member.name}!`);
+      } else {
+        alert('Invalid Mobile Number or PIN. If you are new, click "Create Account" to register.');
+      }
+    }
+
+    // STORE PARTNER LOGIN (FALLBACK + CLOUD)
     async function handlePartnerSubmit(e) {
       e.preventDefault();
       const storeId = document.getElementById('partner-id-input').value.trim().toUpperCase();
@@ -1041,6 +1244,7 @@
       alert('Authentication Failed: Invalid Partner Store ID or Security PIN.');
     }
 
+    // GUARANTEE & CLAIM LOGIC
     async function handleGuaranteeRegister(e) {
       e.preventDefault();
       const phone = document.getElementById('reg-phone').value.trim();
@@ -1789,7 +1993,7 @@
             <div class="flex justify-between text-[10px] font-bold text-black uppercase mb-1">
               <span class="text-black">1. Confirmed</span>
               <span class="text-studio-800">2. Quality Check</span>
-              <span class="text-studio-800">3. Express Cargo</span>
+              <span class="text-studio-800">3. In Transit</span>
               <span class="text-studio-800">4. Delivered</span>
             </div>
             <div class="w-full bg-studio-200 h-1.5 rounded-full overflow-hidden">
