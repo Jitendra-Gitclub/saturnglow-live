@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SaturnGlow Clothing Co. | Contemporary Luxury Streetwear</title>
   
-  <!-- Typography -->
+  <!-- Modern Clean Typography: Plus Jakarta Sans & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -75,14 +75,17 @@
         </button>
         <nav class="hidden md:flex items-center space-x-6 text-xs font-semibold tracking-wider uppercase">
           <button onclick="switchView('store-view'); filterCategory('all');" class="text-black hover:opacity-70 transition-opacity">Collection</button>
-          <button onclick="switchView('store-view'); filterCategory('t-shirts');" class="text-studio-800 hover:text-black transition-colors">Tees</button>
-          <button onclick="switchView('store-view'); filterCategory('polos');" class="text-studio-800 hover:text-black transition-colors">Polos</button>
+          <button onclick="switchView('store-view'); filterCategory('oversized');" class="text-studio-800 hover:text-black transition-colors">240 GSM Terry</button>
+          <button onclick="switchView('store-view'); filterCategory('basic');" class="text-studio-800 hover:text-black transition-colors">180 GSM Everyday</button>
           <button onclick="switchView('vault-view')" class="text-studio-800 hover:text-black transition-colors flex items-center gap-1">
             <span>Women's Vault</span>
             <span class="text-[9px] bg-studio-200 text-black px-1 py-0.5 rounded font-bold uppercase">Soon</span>
           </button>
+          <button onclick="switchView('kids-view')" class="text-studio-800 hover:text-black transition-colors flex items-center gap-1">
+            <span>Kid's Vault</span>
+            <span class="text-[9px] bg-studio-200 text-black px-1 py-0.5 rounded font-bold uppercase">Soon</span>
+          </button>
           <button onclick="scrollToStockists()" class="text-studio-800 hover:text-black transition-colors">Store Locator</button>
-          <button onclick="openGuaranteePortal('claim')" class="text-studio-800 hover:text-black transition-colors">Guarantee</button>
           <button onclick="switchView('about-view')" class="text-studio-800 hover:text-black transition-colors">Dossier</button>
         </nav>
       </div>
@@ -127,7 +130,7 @@
             type="text" 
             id="inline-search-input" 
             oninput="handleInlineSearch(this.value)" 
-            placeholder="Search 180 GSM, 240 GSM Terry, or Polo..." 
+            placeholder="Search 180 GSM or 240 GSM French Terry..." 
             class="w-full pl-10 pr-10 py-2 text-xs bg-studio-100 rounded-lg border border-studio-200 focus:border-black focus:bg-white focus:outline-none text-black transition-colors"
           >
           <button onclick="toggleHeaderSearchBar(false)" class="absolute right-3 text-studio-800 hover:text-black text-xs font-bold" aria-label="Close search">
@@ -157,7 +160,7 @@
               Architectural Cotton. <br>Refined Streetwear.
             </h1>
             <p class="text-studio-800 text-sm sm:text-base max-w-lg leading-relaxed font-normal">
-              Engineered with 100% super combed compact cotton, 240 GSM French Terry loops, and Lycra reinforced anti-roll collars. Offline warranty protection across our regional store network.
+              Engineered with 100% super combed compact cotton, 240 GSM loop-knit French Terry, and Lycra reinforced anti-roll ribbed collars. Designed for structured luxury everyday drape.
             </p>
             <div class="flex flex-wrap gap-4 pt-2">
               <button onclick="scrollToCollection()" class="bg-black hover:bg-studio-800 text-white px-7 py-3 rounded-lg text-xs font-semibold uppercase tracking-wider transition-all shadow-sm">
@@ -172,7 +175,7 @@
           <div class="relative rounded-2xl overflow-hidden bg-studio-100 border border-studio-200 shadow-sm aspect-[4/3] flex items-center justify-center">
             <img src="french-terry.jpeg" alt="SaturnGlow Studio Lookbook" class="w-full h-full headless-crop">
             <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg border border-studio-200 text-xs font-medium text-black">
-              240 GSM French Terry Dropshoulder & 240 GSM Polo
+              240 GSM French Terry Drop Shoulder
             </div>
           </div>
         </div>
@@ -182,11 +185,11 @@
       <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-studio-200">
         <div class="flex items-center space-x-2 overflow-x-auto pb-2 md:pb-0 text-xs uppercase font-semibold">
           <button onclick="filterCategory('all')" class="cat-pill px-4 py-2 rounded-full bg-black text-white transition-colors" data-cat="all">All Drop 01</button>
-          <button onclick="filterCategory('t-shirts')" class="cat-pill px-4 py-2 rounded-full bg-studio-100 text-studio-800 hover:bg-studio-200 transition-colors" data-cat="t-shirts">Tees</button>
-          <button onclick="filterCategory('polos')" class="cat-pill px-4 py-2 rounded-full bg-studio-100 text-studio-800 hover:bg-studio-200 transition-colors" data-cat="polos">Polos</button>
+          <button onclick="filterCategory('oversized')" class="cat-pill px-4 py-2 rounded-full bg-studio-100 text-studio-800 hover:bg-studio-200 transition-colors" data-cat="oversized">240 GSM Terry</button>
+          <button onclick="filterCategory('basic')" class="cat-pill px-4 py-2 rounded-full bg-studio-100 text-studio-800 hover:bg-studio-200 transition-colors" data-cat="basic">180 GSM Combed</button>
         </div>
         <div class="text-xs text-studio-800 font-medium">
-          Showing <span id="item-count">3</span> certified silhouettes &bull; 100% Combed Cotton
+          Showing <span id="item-count">2</span> core architectural silhouettes
         </div>
       </section>
 
@@ -200,13 +203,13 @@
       <section id="stockists-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-studio-200">
         <div class="max-w-2xl mb-10">
           <span class="text-[11px] font-semibold uppercase tracking-widest text-studio-800 bg-studio-100 px-3 py-1 rounded-full">
-            Offline Retail Presence
+            Offline Retail Network
           </span>
           <h2 class="text-2xl sm:text-3xl font-extrabold uppercase tracking-tight text-black mt-3">
             Store Locator & Official Stockists
           </h2>
           <p class="text-xs sm:text-sm text-studio-800 mt-2 leading-relaxed">
-            Experience our heavy-density cottons and test physical silhouettes at our authorized retail partner destinations. Cross-city replacement active across Balotra, Jodhpur, and Barmer.
+            Experience our heavy-density cottons and test physical silhouettes in person at our partner stockist counters across Western Rajasthan.
           </p>
         </div>
 
@@ -219,15 +222,14 @@
                 <span class="text-[11px] text-emerald-600 font-bold uppercase">Ready Stock</span>
               </div>
               <div>
-                <h3 class="text-base font-bold text-black uppercase tracking-tight">The Urban Clothier (Partner Store)</h3>
+                <h3 class="text-base font-bold text-black uppercase tracking-tight">The Urban Clothier</h3>
                 <p class="text-xs text-studio-800 leading-relaxed mt-1">
                   Main Market Road, Near Gandhi Chowk, Balotra, Rajasthan - 344022
                 </p>
               </div>
               <div class="text-[11px] text-studio-800 space-y-0.5">
-                <p><span class="font-semibold text-black">Available:</span> 180 GSM, 240 GSM Terry & 240 GSM Polos</p>
+                <p><span class="font-semibold text-black">Available:</span> 180 GSM Everyday & 240 GSM Terry Drop</p>
                 <p><span class="font-semibold text-black">Store ID:</span> SG-BLT-01</p>
-                <p><span class="font-semibold text-black">Batch Range:</span> SG-BLT-001 to SG-BLT-1000</p>
               </div>
             </div>
             <div class="pt-4 border-t border-studio-100 flex items-center justify-between">
@@ -250,9 +252,8 @@
                 </p>
               </div>
               <div class="text-[11px] text-studio-800 space-y-0.5">
-                <p><span class="font-semibold text-black">Available:</span> 240 GSM French Terry & Polos</p>
+                <p><span class="font-semibold text-black">Available:</span> 240 GSM French Terry Drop Shoulder</p>
                 <p><span class="font-semibold text-black">Store ID:</span> SG-JDP-01</p>
-                <p><span class="font-semibold text-black">Batch Range:</span> SG-JDP-001 to SG-JDP-1000</p>
               </div>
             </div>
             <div class="pt-4 border-t border-studio-100 flex items-center justify-between">
@@ -277,7 +278,6 @@
               <div class="text-[11px] text-studio-800 space-y-0.5">
                 <p><span class="font-semibold text-black">Available:</span> Complete Drop 01 Blanks</p>
                 <p><span class="font-semibold text-black">Store ID:</span> SG-BMR-01</p>
-                <p><span class="font-semibold text-black">Batch Range:</span> SG-BMR-001 to SG-BMR-1000</p>
               </div>
             </div>
             <div class="pt-4 border-t border-studio-100 flex items-center justify-between">
@@ -299,14 +299,29 @@
         Women's Vault &bull; Coming Soon
       </h2>
       <p class="text-studio-800 text-sm max-w-md mx-auto leading-relaxed mb-8">
-        We are tailoring heavy-drape cropped tees (220 GSM Combed Cotton) and hyper-wide parachute trousers specifically engineered for architectural female silhouettes. Dropping Post-Diwali.
+        Tailoring heavy-drape cropped tees (220 GSM Combed Cotton) and structural silhouette staples designed for women. Dropping Post-Diwali.
       </p>
       <div class="flex justify-center gap-4">
         <button onclick="switchView('store-view'); filterCategory('all');" class="bg-black text-white px-7 py-3 rounded-lg text-xs font-semibold uppercase tracking-wider">
           Explore Drop 01
         </button>
-        <button onclick="openGuaranteePortal('claim')" class="border border-studio-300 text-black px-7 py-3 rounded-lg text-xs font-semibold uppercase tracking-wider">
-          Guarantee Desk
+      </div>
+    </div>
+
+    <!-- KID'S VAULT VIEW (COMING SOON) -->
+    <div id="kids-view" class="view-panel hidden max-w-4xl mx-auto px-4 sm:px-6 py-24 text-center">
+      <span class="inline-block text-[11px] font-semibold uppercase tracking-widest text-studio-800 bg-studio-100 px-3 py-1 rounded-full mb-3">
+        Junior Line
+      </span>
+      <h2 class="text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-black mb-4">
+        Kid's Vault &bull; Coming Soon
+      </h2>
+      <p class="text-studio-800 text-sm max-w-md mx-auto leading-relaxed mb-8">
+        100% bio-washed pure combed cotton basics and everyday tees engineered with hypoallergenic softness for kids. In production.
+      </p>
+      <div class="flex justify-center gap-4">
+        <button onclick="switchView('store-view'); filterCategory('all');" class="bg-black text-white px-7 py-3 rounded-lg text-xs font-semibold uppercase tracking-wider">
+          Explore Drop 01
         </button>
       </div>
     </div>
@@ -370,13 +385,8 @@
         </div>
 
         <div class="bg-white p-6 rounded-xl border border-studio-200">
-          <h3 class="text-base font-bold text-black uppercase tracking-wide mb-2">2. Single-Scan Retail Control</h3>
-          <p>Every piece carries a serialized barcode linked to Balotra, Jodhpur, or Barmer allocations. Retail stores scan and lock the warranty at counter checkout, activating 45-day replacement protection across all locations.</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl border border-studio-200">
-          <h3 class="text-base font-bold text-black uppercase tracking-wide mb-2">3. Cross-Store Replacement Guarantee</h3>
-          <p>Every piece comes backed with our 45-day stitching defect replacement and 21-day color fastness guarantee, exchangeable across any authorized official partner store across India.</p>
+          <h3 class="text-base font-bold text-black uppercase tracking-wide mb-2">2. Single-Batch Precision</h3>
+          <p>Every piece is manufactured from 100% super combed compact cotton yarn, processed with bio-enzymes to give an ultra-soft hand feel without compromising the heavy structural drape.</p>
         </div>
       </div>
       <div class="mt-10 text-center">
@@ -403,65 +413,6 @@
       </div>
     </div>
 
-    <!-- 6. PARTNER STORE DESK VIEW -->
-    <div id="partner-desk-view" class="view-panel hidden max-w-5xl mx-auto px-4 sm:px-6 py-12">
-      <div class="flex flex-wrap items-center justify-between border-b border-studio-200 pb-4 mb-8 gap-4">
-        <div>
-          <span class="text-[10px] font-bold uppercase tracking-widest bg-black text-white px-2 py-0.5 rounded">Store Manager Portal</span>
-          <h2 class="text-2xl font-bold tracking-tight text-black uppercase mt-1">Official Partner Store Desk</h2>
-          <p id="partner-store-title" class="text-xs text-studio-800">Authorized Outlet</p>
-        </div>
-        <div class="flex gap-2">
-          <button onclick="openGuaranteePortal('claim')" class="bg-black text-white px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider">
-            Exchange Garment
-          </button>
-          <button onclick="logoutPartnerDesk()" class="border border-studio-300 text-black px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider">
-            Logout
-          </button>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-        <div class="bg-white p-5 rounded-2xl border border-studio-200 shadow-sm">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-studio-800">Cross-Store Replacements</span>
-          <p id="partner-stat-exchanges" class="text-2xl font-extrabold text-black mt-1">0 Pcs</p>
-          <span class="text-[10px] text-emerald-600 font-semibold">Immediate Company Replenishment</span>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-studio-200 shadow-sm">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-studio-800">Pending Credit Notes</span>
-          <p id="partner-stat-credit" class="text-2xl font-extrabold text-black mt-1">₹0</p>
-          <span class="text-[10px] text-studio-800">Settled on Next Invoice</span>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-studio-200 shadow-sm">
-          <span class="text-[10px] font-bold uppercase tracking-wider text-studio-800">Allocated Batch Series</span>
-          <p class="text-lg font-bold text-black mt-1">SG-BLT / JDP / BMR</p>
-          <span class="text-[10px] text-blue-600 font-semibold">001–1000 Barcode Range</span>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-2xl border border-studio-200 p-6 shadow-sm">
-        <h3 class="text-xs font-bold uppercase tracking-wider text-black mb-4">Customer Exchanges Handled by This Store</h3>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs text-studio-800 border-collapse">
-            <thead>
-              <tr class="border-b border-studio-200 text-black font-semibold">
-                <th class="py-2">Date</th>
-                <th class="py-2">Tag Code</th>
-                <th class="py-2">Original Store</th>
-                <th class="py-2">Defect Reason</th>
-                <th class="py-2 text-right">Replenishment Status</th>
-              </tr>
-            </thead>
-            <tbody id="partner-ledger-rows" class="divide-y divide-studio-100">
-              <tr>
-                <td colspan="5" class="py-6 text-center text-studio-800">No cross-store replacements processed yet today.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
   </main>
 
   <!-- QUICK VIEW PRODUCT DRAWER -->
@@ -482,7 +433,7 @@
     </div>
   </aside>
 
-  <!-- NAVIGATION SLIDE DRAWER (ORIGINAL 10 OPTIONS) -->
+  <!-- NAVIGATION SLIDE DRAWER -->
   <aside id="nav-drawer" aria-label="Main menu" class="fixed inset-y-0 left-0 z-50 w-80 bg-white border-r border-studio-200 shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
     <div class="p-5 border-b border-studio-200 flex items-center justify-between">
       <span class="text-sm font-bold uppercase tracking-wider text-black">Menu</span>
@@ -493,14 +444,16 @@
 
     <div class="p-6 space-y-3 flex-grow overflow-y-auto custom-scroll text-xs uppercase font-semibold">
       
-      <!-- 1. Profile / Account -->
-      <button onclick="toggleDrawer('nav-drawer'); openAuthModal();" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800 border-b border-studio-100">
-        <span class="flex items-center space-x-2.5">
-          <svg class="w-4 h-4 text-studio-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-          <span class="tracking-wide">1. Member & Partner Access</span>
-        </span>
-        <span class="text-[10px] text-studio-800 font-normal">Sign In &rarr;</span>
-      </button>
+      <!-- 1. Profile / Account (Dynamic Name on Login) -->
+      <div id="nav-user-slot" class="border-b border-studio-100">
+        <button onclick="toggleDrawer('nav-drawer'); openAuthModal();" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800">
+          <span class="flex items-center space-x-2.5">
+            <svg class="w-4 h-4 text-studio-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            <span class="tracking-wide">1. Member Access</span>
+          </span>
+          <span class="text-[10px] text-studio-800 font-normal">Sign In &rarr;</span>
+        </button>
+      </div>
 
       <!-- 2. All Collections -->
       <button onclick="switchView('store-view'); filterCategory('all'); toggleDrawer('nav-drawer');" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800 border-b border-studio-100">
@@ -508,7 +461,7 @@
         <span class="text-[10px] text-studio-800 font-normal">Drop 01</span>
       </button>
 
-      <!-- 3. Men's Vault (Real 3 Blanks) -->
+      <!-- 3. Men's Vault -->
       <div class="border-b border-studio-100 pb-2">
         <button onclick="toggleSubmenu('sub-mens')" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800">
           <span class="tracking-wide">3. Men's Vault</span>
@@ -517,9 +470,8 @@
 
         <div id="sub-mens" class="hidden pl-3 pt-1 space-y-2 normal-case font-normal text-studio-800">
           <ul class="pl-2.5 space-y-2 border-l border-studio-200 text-[11px]">
-            <li><button onclick="filterCategoryByGSM(180); toggleDrawer('nav-drawer');" class="hover:text-black block text-left font-medium">180 GSM Round Neck Regular Fit</button></li>
-            <li><button onclick="filterCategoryByGSM(240); toggleDrawer('nav-drawer');" class="hover:text-black block text-left font-medium">240 GSM French Terry Oversized</button></li>
-            <li><button onclick="filterCategory('polos'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left font-medium">240 GSM Polo Regular Fit</button></li>
+            <li><button onclick="filterCategory('basic'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left font-medium">180 GSM Round Neck Regular Fit</button></li>
+            <li><button onclick="filterCategory('oversized'); toggleDrawer('nav-drawer');" class="hover:text-black block text-left font-medium">240 GSM French Terry Oversized</button></li>
           </ul>
         </div>
       </div>
@@ -532,28 +484,30 @@
         </button>
       </div>
 
-      <!-- 5. Store Locator -->
+      <!-- 5. Kid's Vault (Coming Soon) -->
+      <div class="border-b border-studio-100 pb-2">
+        <button onclick="switchView('kids-view'); toggleDrawer('nav-drawer');" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800">
+          <span class="tracking-wide">5. Kid's Vault</span>
+          <span class="text-[9px] bg-studio-200 text-black px-2 py-0.5 rounded font-bold uppercase">Coming Soon</span>
+        </button>
+      </div>
+
+      <!-- 6. Store Locator -->
       <button onclick="scrollToStockists(); toggleDrawer('nav-drawer');" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800 border-b border-studio-100">
-        <span class="tracking-wide">5. Store Locator</span>
+        <span class="tracking-wide">6. Store Locator</span>
         <span class="text-[10px] text-studio-800 font-normal">Offline Stockists</span>
       </button>
 
-      <!-- 6. Become An Official Store -->
+      <!-- 7. Become An Official Store -->
       <button onclick="toggleDrawer('nav-drawer'); window.open('https://wa.me/917023037783?text=Hi%20SaturnGlow,%20we%20want%20to%20become%20an%20Official%20Partner%20Store', '_blank');" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800 border-b border-studio-100">
-        <span class="tracking-wide text-black">6. Become An Official Store</span>
+        <span class="tracking-wide text-black">7. Become An Official Store</span>
         <span class="text-[9px] bg-black text-white px-2 py-0.5 rounded font-bold uppercase">B2B Tie-Up</span>
       </button>
 
-      <!-- 7. Track Orders -->
+      <!-- 8. Track Orders -->
       <button onclick="switchView('orders-view'); toggleDrawer('nav-drawer');" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800 border-b border-studio-100">
-        <span class="tracking-wide">7. Track Orders</span>
+        <span class="tracking-wide">8. Track Orders</span>
         <span class="text-[10px] text-emerald-600 font-bold uppercase">Live Dispatch</span>
-      </button>
-
-      <!-- 8. Guarantee Portal -->
-      <button onclick="toggleDrawer('nav-drawer'); openGuaranteePortal('register');" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800 border-b border-studio-100">
-        <span class="tracking-wide">8. Guarantee Portal</span>
-        <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold uppercase">Activate & Claim</span>
       </button>
 
       <!-- 9. About Us -->
@@ -587,195 +541,90 @@
     </div>
   </aside>
 
-  <!-- AUTHENTICATION & PARTNER DESK MODAL (WITH MEMBER SIGN-UP & REAL OTP FLOW) -->
+  <!-- MEMBER AUTH MODAL (SIGN-IN & SIGN-UP WITH REAL-TIME OTP) -->
   <div id="auth-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-sm w-full border border-studio-200 shadow-2xl p-6 space-y-4 my-8">
       
       <!-- Top Modal Header -->
       <div class="flex items-center justify-between border-b border-studio-200 pb-3">
-        <div class="flex space-x-3 text-xs font-bold uppercase tracking-wider">
-          <button id="auth-tab-member" onclick="toggleAuthRole('member')" class="text-black border-b-2 border-black pb-1">
-            Member
-          </button>
-          <button id="auth-tab-partner" onclick="toggleAuthRole('partner')" class="text-studio-800 pb-1">
-            Partner Desk
-          </button>
-        </div>
+        <span class="text-xs font-bold uppercase tracking-wider text-black">Member Access Vault</span>
         <button onclick="toggleModal('auth-modal')" class="text-studio-800 hover:text-black">✕</button>
       </div>
 
-      <!-- MEMBER SECTION CONTAINER -->
-      <div id="member-container">
-        
-        <!-- Toggle Between Login and Sign-Up -->
-        <div class="flex bg-studio-100 p-1 rounded-lg text-[11px] font-semibold mb-4">
-          <button id="mem-subtab-login" onclick="switchMemberMode('login')" class="w-1/2 py-1.5 text-center rounded-md bg-white text-black shadow-sm uppercase tracking-wider">
-            Sign In
-          </button>
-          <button id="mem-subtab-signup" onclick="switchMemberMode('signup')" class="w-1/2 py-1.5 text-center rounded-md text-studio-800 uppercase tracking-wider">
-            Create Account
-          </button>
-        </div>
-
-        <!-- 1A. Member Sign-In Form -->
-        <form id="member-login-form" onsubmit="handleMemberLogin(event)" class="space-y-3.5">
-          <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Registered 10-Digit Mobile</label>
-            <input type="tel" id="login-phone" required maxlength="10" placeholder="98XXXXXXXX" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
-          </div>
-          <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Security PIN / Passcode</label>
-            <input type="password" id="login-pin" required maxlength="6" placeholder="••••" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
-          </div>
-          <button type="submit" class="w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-2.5 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
-            Access Member Vault &rarr;
-          </button>
-          <p class="text-[11px] text-center text-studio-800 pt-1">
-            Don't have an account? <button type="button" onclick="switchMemberMode('signup')" class="text-black font-bold underline">Create one now</button>
-          </p>
-        </form>
-
-        <!-- 1B. Member Sign-Up Form (With Real-Time OTP Generation) -->
-        <form id="member-signup-form" onsubmit="handleMemberSignup(event)" class="space-y-3 hidden">
-          <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Full Legal Name</label>
-            <input type="text" id="signup-name" required placeholder="Alex Mercer" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
-          </div>
-
-          <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Mobile Number</label>
-            <div class="flex gap-2">
-              <input type="tel" id="signup-phone" required maxlength="10" placeholder="98XXXXXXXX" class="flex-grow px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
-              <button type="button" id="btn-send-otp" onclick="generateAndSendOTP()" class="whitespace-nowrap px-3 py-2 bg-studio-100 hover:bg-black hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider text-black transition-colors border border-studio-300">
-                Send OTP
-              </button>
-            </div>
-            <p id="otp-status-msg" class="text-[10px] text-studio-800 mt-1 hidden"></p>
-          </div>
-
-          <div id="otp-input-field" class="hidden">
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Enter Verification OTP</label>
-            <div class="flex gap-2">
-              <input type="text" id="signup-otp" maxlength="4" placeholder="4-Digit Code" class="flex-grow px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black font-mono tracking-widest text-center">
-              <button type="button" onclick="verifyEnteredOTP()" class="whitespace-nowrap px-3 py-2 bg-black text-white rounded-lg text-[10px] font-bold uppercase tracking-wider">
-                Verify
-              </button>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-2">
-            <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Create PIN</label>
-              <input type="password" id="signup-pin" required maxlength="6" placeholder="4-6 Digits" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
-            </div>
-            <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Confirm PIN</label>
-              <input type="password" id="signup-confirm-pin" required maxlength="6" placeholder="Re-enter" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
-            </div>
-          </div>
-
-          <button type="submit" id="btn-create-account" class="w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-2.5 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
-            Create Account & Join &rarr;
-          </button>
-          <p class="text-[11px] text-center text-studio-800 pt-1">
-            Already registered? <button type="button" onclick="switchMemberMode('login')" class="text-black font-bold underline">Sign in</button>
-          </p>
-        </form>
-
+      <!-- Toggle Between Login and Sign-Up -->
+      <div class="flex bg-studio-100 p-1 rounded-lg text-[11px] font-semibold mb-4">
+        <button id="mem-subtab-login" onclick="switchMemberMode('login')" class="w-1/2 py-1.5 text-center rounded-md bg-white text-black shadow-sm uppercase tracking-wider">
+          Sign In
+        </button>
+        <button id="mem-subtab-signup" onclick="switchMemberMode('signup')" class="w-1/2 py-1.5 text-center rounded-md text-studio-800 uppercase tracking-wider">
+          Create Account
+        </button>
       </div>
 
-      <!-- 2. STORE PARTNER FORM -->
-      <form id="partner-auth-form" onsubmit="handlePartnerSubmit(event)" class="space-y-4 hidden">
-        <div class="p-3 bg-studio-100 rounded-lg text-[11px] text-studio-800">
-          Official store managers can verify cloud warranties, process cross-store piece exchanges, and audit credit balances.
+      <!-- 1. Member Sign-In Form -->
+      <form id="member-login-form" onsubmit="handleMemberLogin(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Registered 10-Digit Mobile</label>
+          <input type="tel" id="login-phone" required maxlength="10" placeholder="98XXXXXXXX" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
         </div>
         <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Partner Store ID</label>
-          <input type="text" id="partner-id-input" required class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none uppercase" placeholder="e.g. SG-BLT-01">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Security PIN / Passcode</label>
+          <input type="password" id="login-pin" required maxlength="6" placeholder="••••" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
         </div>
-        <div>
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Manager Security PIN</label>
-          <input type="password" id="partner-pin-input" required maxlength="6" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none" placeholder="2026">
-        </div>
-        <button type="submit" class="w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-3 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
-          Verify With Cloud & Open Desk &rarr;
+        <button type="submit" class="w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-2.5 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
+          Access Member Vault &rarr;
         </button>
+        <p class="text-[11px] text-center text-studio-800 pt-1">
+          Don't have an account? <button type="button" onclick="switchMemberMode('signup')" class="text-black font-bold underline">Create one now</button>
+        </p>
       </form>
 
-    </div>
-  </div>
-
-  <!-- GUARANTEE PORTAL MODAL -->
-  <div id="guarantee-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white rounded-2xl max-w-lg w-full border border-studio-200 shadow-2xl p-6 sm:p-8 space-y-5 my-8">
-      
-      <div class="flex items-center justify-between border-b border-studio-200 pb-3">
+      <!-- 2. Member Sign-Up Form (With OTP Generation) -->
+      <form id="member-signup-form" onsubmit="handleMemberSignup(event)" class="space-y-3 hidden">
         <div>
-          <span class="text-[10px] font-bold uppercase tracking-widest text-studio-800">Decentralized Protection</span>
-          <h3 class="text-base font-bold uppercase tracking-wide text-black">SaturnGlow Guarantee Portal</h3>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Full Legal Name</label>
+          <input type="text" id="signup-name" required placeholder="Alex Mercer" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
         </div>
-        <button onclick="toggleModal('guarantee-modal')" class="text-studio-800 hover:text-black">✕</button>
-      </div>
 
-      <div class="flex border-b border-studio-200 text-xs font-bold uppercase tracking-wider">
-        <button id="gt-tab-register" onclick="switchGuaranteeTab('register')" class="w-1/2 py-2 text-center text-black border-b-2 border-black">
-          1. Register Garment
-        </button>
-        <button id="gt-tab-claim" onclick="switchGuaranteeTab('claim')" class="w-1/2 py-2 text-center text-studio-800 hover:text-black">
-          2. Check / Claim Exchange
-        </button>
-      </div>
+        <div>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Mobile Number</label>
+          <div class="flex gap-2">
+            <input type="tel" id="signup-phone" required maxlength="10" placeholder="98XXXXXXXX" class="flex-grow px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
+            <button type="button" id="btn-send-otp" onclick="generateAndSendOTP()" class="whitespace-nowrap px-3 py-2 bg-studio-100 hover:bg-black hover:text-white rounded-lg text-[10px] font-bold uppercase tracking-wider text-black transition-colors border border-studio-300">
+              Send OTP
+            </button>
+          </div>
+          <p id="otp-status-msg" class="text-[10px] text-studio-800 mt-1 hidden"></p>
+        </div>
 
-      <!-- TAB 1: REGISTRATION -->
-      <div id="guarantee-panel-register" class="space-y-4">
-        <p class="text-xs text-studio-800 leading-relaxed">
-          Purchased from an Official Partner Store? Register your regional hangtag code (SG-BLT, SG-JDP, or SG-BMR) to activate 45-day replacement.
-        </p>
+        <div id="otp-input-field" class="hidden">
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Enter Verification OTP</label>
+          <div class="flex gap-2">
+            <input type="text" id="signup-otp" maxlength="4" placeholder="4-Digit Code" class="flex-grow px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black font-mono tracking-widest text-center">
+            <button type="button" onclick="verifyEnteredOTP()" class="whitespace-nowrap px-3 py-2 bg-black text-white rounded-lg text-[10px] font-bold uppercase tracking-wider">
+              Verify
+            </button>
+          </div>
+        </div>
 
-        <form id="gt-register-form" onsubmit="handleGuaranteeRegister(event)" class="space-y-3">
+        <div class="grid grid-cols-2 gap-2">
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Customer Mobile Number</label>
-            <input type="tel" required maxlength="10" id="reg-phone" placeholder="98XXXXXXXX" class="w-full px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Create PIN</label>
+            <input type="password" id="signup-pin" required maxlength="6" placeholder="4-6 Digits" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
           </div>
           <div>
-            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Regional Serial Hangtag Code</label>
-            <input type="text" required id="reg-tag-code" placeholder="e.g. SG-BLT-014 or SG-JDP-102" class="w-full px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black uppercase">
+            <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Confirm PIN</label>
+            <input type="password" id="signup-confirm-pin" required maxlength="6" placeholder="Re-enter" class="w-full px-3 py-2 text-xs bg-white rounded-lg border border-studio-300 focus:border-black focus:outline-none text-black">
           </div>
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Purchasing Store</label>
-              <select id="reg-store" class="w-full px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black">
-                <option value="The Urban Clothier (Balotra)">The Urban Clothier (Balotra)</option>
-                <option value="Vogue Menswear Studio (Jodhpur)">Vogue Menswear Studio (Jodhpur)</option>
-                <option value="Apex Streetwear (Barmer)">Apex Streetwear (Barmer)</option>
-                <option value="Online Direct D2C">SaturnGlow Online Direct</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-1">Store Invoice / Bill No.</label>
-              <input type="text" required id="reg-bill-no" placeholder="Inv #0412" class="w-full px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black">
-            </div>
-          </div>
-          <button type="submit" class="w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-3 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
-            Activate Nationwide Guarantee &rarr;
-          </button>
-        </form>
-      </div>
+        </div>
 
-      <!-- TAB 2: VERIFICATION & CLAIM -->
-      <div id="guarantee-panel-claim" class="space-y-4 hidden">
-        <p class="text-xs text-studio-800 leading-relaxed">
-          Visiting any of our Official Partner Stores for exchange? Search with customer mobile or tag code to verify guarantee validity.
+        <button type="submit" id="btn-create-account" class="w-full bg-black hover:bg-studio-800 text-white text-xs font-semibold py-2.5 rounded-lg uppercase tracking-wider transition-colors shadow-sm">
+          Create Account & Join &rarr;
+        </button>
+        <p class="text-[11px] text-center text-studio-800 pt-1">
+          Already registered? <button type="button" onclick="switchMemberMode('login')" class="text-black font-bold underline">Sign in</button>
         </p>
-
-        <div class="flex gap-2">
-          <input type="text" id="claim-search-query" placeholder="Enter Registered 10-Digit Mobile or Tag Code..." class="flex-grow px-3 py-2 text-xs bg-studio-50 rounded-lg border border-studio-200 focus:border-black focus:outline-none text-black uppercase">
-          <button onclick="searchWarrantyRecord()" class="bg-black text-white px-4 py-2 rounded-lg text-xs font-semibold uppercase">Search</button>
-        </div>
-
-        <div id="claim-result-box" class="hidden p-4 rounded-xl border border-studio-200 bg-studio-50 space-y-3 text-xs">
-        </div>
-      </div>
+      </form>
 
     </div>
   </div>
@@ -824,7 +673,7 @@
 
         <!-- PAYMENT OPTIONS -->
         <div class="border-t border-studio-200 pt-3">
-          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-2">Payment Gateway / Option</label>
+          <label class="block text-[11px] font-bold uppercase tracking-wider text-studio-800 mb-2">Payment Option</label>
           <div class="grid grid-cols-2 gap-2.5">
             <label class="border border-studio-300 hover:border-black bg-studio-50 p-2.5 rounded-lg flex items-center space-x-2 cursor-pointer transition-colors">
               <input type="radio" name="payment" value="UPI" checked class="text-black focus:ring-0">
@@ -865,13 +714,12 @@
 
       <div id="ai-messages" class="p-4 h-64 overflow-y-auto space-y-3 text-xs custom-scroll bg-studio-50">
         <div class="bg-white border border-studio-200 p-3 rounded-xl max-w-[85%] text-studio-800">
-          Hello! I am your Orbit fabric assistant. Ask me anything about our 180 GSM vs 240 GSM cotton weights, cross-store exchange guarantee, or payment options.
+          Hello! I am your Orbit fabric assistant. Ask me anything about our 180 GSM vs 240 GSM cotton weights, offline stores, or payment options.
         </div>
       </div>
 
       <div class="p-2 bg-white border-t border-studio-200 flex gap-1 overflow-x-auto text-[10px]">
         <button onclick="sendQuickPrompt('Explain 180 GSM vs 240 GSM')" class="whitespace-nowrap px-2 py-1 bg-studio-100 hover:bg-studio-200 rounded text-black font-medium">GSM Guide</button>
-        <button onclick="sendQuickPrompt('How does Cross-Store Guarantee work?')" class="whitespace-nowrap px-2 py-1 bg-studio-100 hover:bg-studio-200 rounded text-black font-medium">Guarantee Info</button>
         <button onclick="sendQuickPrompt('Where are your offline stores?')" class="whitespace-nowrap px-2 py-1 bg-studio-100 hover:bg-studio-200 rounded text-black font-medium">Store Locator</button>
         <button onclick="sendQuickPrompt('What are the chest sizes?')" class="whitespace-nowrap px-2 py-1 bg-studio-100 hover:bg-studio-200 rounded text-black font-medium">Size Chart</button>
       </div>
@@ -905,7 +753,6 @@
         <ul class="space-y-2">
           <li><button onclick="switchView('store-view')" class="hover:text-black">Drop Archive</button></li>
           <li><button onclick="scrollToStockists()" class="hover:text-black">Store Locator (Stockists)</button></li>
-          <li><button onclick="openGuaranteePortal('claim')" class="hover:text-black">Guarantee Portal</button></li>
           <li><button onclick="switchView('wishlist-view')" class="hover:text-black">Personal Vault</button></li>
           <li><button onclick="switchView('orders-view')" class="hover:text-black">Live Order Tracking</button></li>
         </ul>
@@ -916,7 +763,6 @@
         <ul class="space-y-2">
           <li>100% Super Combed Compact Cotton</li>
           <li>240 GSM French Terry Drop Shoulders</li>
-          <li>45-Day Stitching Guarantee</li>
           <li><a href="https://wa.me/917023037783?text=Hi%20SaturnGlow,%20we%20want%20to%20become%20an%20Official%20Partner%20Store" target="_blank" class="hover:text-black underline">Become an Official Store</a></li>
         </ul>
       </div>
@@ -945,13 +791,13 @@
       ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
       : null;
 
-    // 2. REAL THREE BLANKS CATALOGUE
+    // 2. REAL TWO BLANKS CATALOGUE (POLO REMOVED)
     const PRODUCTS = [
       {
         id: 'sg-01',
         title: '240 GSM French Terry Oversized Tee',
         gsm: 240,
-        category: 't-shirts',
+        category: 'oversized',
         price: 999,
         originalPrice: 1999,
         fit: 'True Drop Shoulder Streetwear Cut',
@@ -967,7 +813,7 @@
         id: 'sg-02',
         title: '180 GSM Round Neck Regular Fit Tee',
         gsm: 180,
-        category: 't-shirts',
+        category: 'basic',
         price: 699,
         originalPrice: 1399,
         fit: 'Everyday Relaxed Fit',
@@ -978,41 +824,15 @@
           { name: 'Bone White', hex: '#F5F5F0', img: '180gsm.jpeg' }
         ],
         sizes: ['S', 'M', 'L', 'XL', '2XL']
-      },
-      {
-        id: 'sg-03',
-        title: '240 GSM Structured Cotton Polo',
-        gsm: 240,
-        category: 'polos',
-        price: 1199,
-        originalPrice: 2399,
-        fit: 'Tailored Streetwear Polo',
-        fabric: '240 GSM Pure Cotton Matty Knit',
-        description: 'Heavyweight flat-knit polo featuring reinforced button plackets and anti-curl collar technology.',
-        colors: [
-          { name: 'Pitch Black', hex: '#0A0A0C', img: 'polo.jpeg' },
-          { name: 'Sky Blue', hex: '#87CEFA', img: 'polo.jpeg' }
-        ],
-        sizes: ['S', 'M', 'L', 'XL', '2XL']
       }
     ];
 
-    // 3. REGIONAL BARCODE VALIDATOR
-    function isValidRegionalTag(code) {
-      const pattern = /^SG-(BLT|JDP|BMR)-([0-9]{3,4})$/i;
-      const match = code.match(pattern);
-      if (!match) return false;
-      const num = parseInt(match[2], 10);
-      return num >= 1 && num <= 1000;
-    }
-
-    // 4. APPLICATION STATE
+    // 3. APPLICATION STATE
     let cart = JSON.parse(localStorage.getItem('sg_cart')) || [];
     let wishlist = JSON.parse(localStorage.getItem('sg_wishlist')) || [];
     let orders = JSON.parse(localStorage.getItem('sg_orders')) || [];
-    let partnerExchanges = JSON.parse(localStorage.getItem('sg_partner_exchanges')) || [];
-    let localGuarantees = JSON.parse(localStorage.getItem('sg_local_guarantees')) || [];
     let registeredMembers = JSON.parse(localStorage.getItem('sg_members')) || [];
+    let currentLoggedInUser = JSON.parse(localStorage.getItem('sg_active_user')) || null;
     let currentSelectedProduct = null;
     let generatedOTPCode = null;
     let isPhoneVerified = false;
@@ -1023,33 +843,13 @@
       renderCart();
       renderWishlist();
       renderOrders();
-      renderPartnerDesk();
+      updateNavUserState();
     });
 
-    // 5. AUTHENTICATION & MEMBER ONBOARDING
+    // 4. AUTHENTICATION & MEMBER ONBOARDING
     function openAuthModal() {
       toggleModal('auth-modal');
-      toggleAuthRole('member');
       switchMemberMode('login');
-    }
-
-    function toggleAuthRole(role) {
-      const memBtn = document.getElementById('auth-tab-member');
-      const partBtn = document.getElementById('auth-tab-partner');
-      const memContainer = document.getElementById('member-container');
-      const partForm = document.getElementById('partner-auth-form');
-
-      if (role === 'member') {
-        memBtn.className = 'text-black border-b-2 border-black pb-1';
-        partBtn.className = 'text-studio-800 pb-1';
-        memContainer.classList.remove('hidden');
-        partForm.classList.add('hidden');
-      } else {
-        partBtn.className = 'text-black border-b-2 border-black pb-1';
-        memBtn.className = 'text-studio-800 pb-1';
-        partForm.classList.remove('hidden');
-        memContainer.classList.add('hidden');
-      }
     }
 
     function switchMemberMode(mode) {
@@ -1071,7 +871,6 @@
       }
     }
 
-    // REAL-TIME OTP GENERATOR & SIMULATOR
     function generateAndSendOTP() {
       const phone = document.getElementById('signup-phone').value.trim();
       const statusMsg = document.getElementById('otp-status-msg');
@@ -1083,13 +882,12 @@
         return;
       }
 
-      // Generate random 4-digit OTP
       generatedOTPCode = Math.floor(1000 + Math.random() * 9000).toString();
 
       otpField.classList.remove('hidden');
       statusMsg.classList.remove('hidden');
       statusMsg.className = 'text-[10px] text-emerald-600 mt-1 font-semibold';
-      statusMsg.innerHTML = `OTP Sent! Your verification code is: <span class="bg-black text-white px-2 py-0.5 rounded font-mono">${generatedOTPCode}</span>`;
+      statusMsg.innerHTML = `OTP Sent! Verification code: <span class="bg-black text-white px-2 py-0.5 rounded font-mono">${generatedOTPCode}</span>`;
       
       btnSend.innerText = 'Resend';
       showToast(`Verification OTP: ${generatedOTPCode}`);
@@ -1110,7 +908,6 @@
       }
     }
 
-    // MEMBER REGISTRATION HANDLER
     async function handleMemberSignup(e) {
       e.preventDefault();
       const name = document.getElementById('signup-name').value.trim();
@@ -1140,35 +937,27 @@
         return;
       }
 
-      const newMember = {
-        name,
-        phone,
-        pin,
-        created_at: new Date().toISOString()
-      };
-
-      // Save to local cache
+      const newMember = { name, phone, pin, created_at: new Date().toISOString() };
       registeredMembers.push(newMember);
       localStorage.setItem('sg_members', JSON.stringify(registeredMembers));
 
-      // Attempt sync to Supabase 'members' or 'profiles' table if available
       if (supabaseClient) {
-        try {
-          await supabaseClient.from('members').insert([newMember]);
-        } catch (err) {}
+        try { await supabaseClient.from('members').insert([newMember]); } catch (err) {}
       }
+
+      currentLoggedInUser = newMember;
+      localStorage.setItem('sg_active_user', JSON.stringify(newMember));
+      updateNavUserState();
 
       showToast(`Welcome to SaturnGlow, ${name}!`);
       toggleModal('auth-modal');
 
-      // Reset signup form
       document.getElementById('member-signup-form').reset();
       isPhoneVerified = false;
       document.getElementById('otp-input-field').classList.add('hidden');
       document.getElementById('otp-status-msg').classList.add('hidden');
     }
 
-    // MEMBER LOGIN HANDLER
     async function handleMemberLogin(e) {
       e.preventDefault();
       const phone = document.getElementById('login-phone').value.trim();
@@ -1189,6 +978,9 @@
       }
 
       if (member) {
+        currentLoggedInUser = member;
+        localStorage.setItem('sg_active_user', JSON.stringify(member));
+        updateNavUserState();
         toggleModal('auth-modal');
         showToast(`Welcome back, ${member.name}!`);
       } else {
@@ -1196,258 +988,45 @@
       }
     }
 
-    // STORE PARTNER LOGIN (FALLBACK + CLOUD)
-    async function handlePartnerSubmit(e) {
-      e.preventDefault();
-      const storeId = document.getElementById('partner-id-input').value.trim().toUpperCase();
-      const pin = document.getElementById('partner-pin-input').value.trim();
+    function updateNavUserState() {
+      const slot = document.getElementById('nav-user-slot');
+      if (!slot) return;
 
-      const validStores = {
-        'SG-BLT-01': 'The Urban Clothier (Balotra)',
-        'SG-JDP-01': 'Vogue Menswear Studio (Jodhpur)',
-        'SG-BMR-01': 'Apex Streetwear (Barmer)',
-        'SG-RJ-BAL-001': 'The Urban Clothier (Balotra HQ)'
-      };
-
-      if ((validStores[storeId] || storeId === 'SG-001') && pin === '2026') {
-        toggleModal('auth-modal');
-        document.getElementById('partner-store-title').innerText = `${validStores[storeId] || 'Central Desk'} — ID: ${storeId}`;
-        switchView('partner-desk-view');
-        showToast('Welcome, Official Partner Store Desk!');
-        renderPartnerDesk();
-        return;
-      }
-
-      showToast('Verifying with Supabase Cloud...');
-
-      if (supabaseClient) {
-        try {
-          const { data: store, error } = await supabaseClient
-            .from('stores')
-            .select('*')
-            .eq('store_id', storeId)
-            .eq('pin', pin)
-            .eq('is_active', true)
-            .single();
-
-          if (!error && store) {
-            toggleModal('auth-modal');
-            document.getElementById('partner-store-title').innerText = `${store.store_name} (${store.city}) — ID: ${store.store_id}`;
-            switchView('partner-desk-view');
-            showToast(`Welcome, ${store.store_name}!`);
-            renderPartnerDesk();
-            return;
-          }
-        } catch (err) {}
-      }
-
-      alert('Authentication Failed: Invalid Partner Store ID or Security PIN.');
-    }
-
-    // GUARANTEE & CLAIM LOGIC
-    async function handleGuaranteeRegister(e) {
-      e.preventDefault();
-      const phone = document.getElementById('reg-phone').value.trim();
-      const tagCode = document.getElementById('reg-tag-code').value.trim().toUpperCase();
-      const store = document.getElementById('reg-store').value;
-      const billNo = document.getElementById('reg-bill-no').value.trim();
-
-      if (!isValidRegionalTag(tagCode)) {
-        alert('Invalid Serial Number! Must be between:\n- SG-BLT-001 to SG-BLT-1000\n- SG-JDP-001 to SG-JDP-1000\n- SG-BMR-001 to SG-BMR-1000');
-        return;
-      }
-
-      showToast('Activating Barcode...');
-
-      const newRecord = {
-        phone: phone,
-        tag_code: tagCode,
-        store_name: store,
-        bill_no: billNo,
-        is_exchanged: false,
-        created_at: new Date().toISOString()
-      };
-
-      localGuarantees.unshift(newRecord);
-      localStorage.setItem('sg_local_guarantees', JSON.stringify(localGuarantees));
-
-      if (supabaseClient) {
-        try {
-          await supabaseClient.from('guarantees').insert([newRecord]);
-        } catch (err) {}
-      }
-
-      document.getElementById('gt-register-form').reset();
-      showToast(`Warranty Active for Tag ${tagCode}!`);
-      switchGuaranteeTab('claim');
-      document.getElementById('claim-search-query').value = phone;
-      searchWarrantyRecord();
-    }
-
-    async function searchWarrantyRecord() {
-      const query = document.getElementById('claim-search-query').value.trim().toUpperCase();
-      const box = document.getElementById('claim-result-box');
-      box.classList.remove('hidden');
-      box.innerHTML = `<p class="text-center text-studio-800 text-xs py-2">Querying Warranty Ledger...</p>`;
-
-      let match = null;
-
-      if (supabaseClient) {
-        try {
-          const { data: records, error } = await supabaseClient
-            .from('guarantees')
-            .select('*')
-            .or(`phone.eq.${query},tag_code.eq.${query}`);
-
-          if (!error && records && records.length > 0) {
-            match = records[0];
-          }
-        } catch (err) {}
-      }
-
-      if (!match) {
-        match = localGuarantees.find(g => g.phone === query || g.tag_code === query);
-      }
-
-      if (!match) {
-        box.innerHTML = `
-          <div class="text-center py-3 text-studio-800">
-            <p class="font-bold text-black uppercase">No Active Warranty Found</p>
-            <p class="text-[11px] mt-1">Verify tag code format (SG-BLT, SG-JDP, SG-BMR) or register first.</p>
-          </div>
-        `;
-        return;
-      }
-
-      const regDate = new Date(match.created_at);
-      const today = new Date();
-      const diffDays = Math.floor((today - regDate) / (1000 * 60 * 60 * 24));
-      const stitchingLeft = Math.max(0, 45 - diffDays);
-      const colorLeft = Math.max(0, 21 - diffDays);
-
-      box.innerHTML = `
-        <div class="flex justify-between items-start border-b border-studio-200 pb-2">
-          <div>
-            <span class="font-bold text-black uppercase">${match.tag_code}</span>
-            <p class="text-[10px] text-studio-800">Registered: ${match.store_name} (Bill: ${match.bill_no})</p>
-          </div>
-          <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${match.is_exchanged ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-800'}">
-            ${match.is_exchanged ? 'Already Replaced' : 'Active & Verified'}
-          </span>
-        </div>
-
-        <div class="grid grid-cols-2 gap-2 text-[11px] my-2">
-          <div class="p-2 bg-white rounded border border-studio-200">
-            <span class="font-semibold block text-black">45-Day Seam Warranty</span>
-            <span class="${stitchingLeft > 0 ? 'text-emerald-600 font-bold' : 'text-red-500'}">${stitchingLeft > 0 ? stitchingLeft + ' Days Remaining' : 'Expired'}</span>
-          </div>
-          <div class="p-2 bg-white rounded border border-studio-200">
-            <span class="font-semibold block text-black">21-Day Color Fastness</span>
-            <span class="${colorLeft > 0 ? 'text-emerald-600 font-bold' : 'text-red-500'}">${colorLeft > 0 ? colorLeft + ' Days Remaining' : 'Expired'}</span>
-          </div>
-        </div>
-
-        ${!match.is_exchanged ? `
-          <div class="pt-2">
-            <label class="block text-[10px] font-bold uppercase text-black mb-1">Exchange Claim Reason:</label>
-            <select id="exchange-issue-select" class="w-full px-2 py-1.5 text-xs bg-white rounded border border-studio-200 mb-2">
-              <option value="Stitching / Seam Defect (45-Day)">Stitching / Seam Unraveling</option>
-              <option value="Excessive Color Fade (21-Day)">Excessive Color Fade</option>
-            </select>
-            <button onclick="approveInStoreExchange('${match.tag_code}', '${match.store_name}')" class="w-full bg-black text-white text-xs font-semibold py-2 rounded uppercase tracking-wider hover:bg-studio-800 transition-colors">
-              Approve Replacement At Counter &rarr;
+      if (currentLoggedInUser) {
+        slot.innerHTML = `
+          <div class="flex items-center justify-between w-full py-2.5 text-black">
+            <span class="flex items-center space-x-2.5">
+              <span class="w-5 h-5 rounded-full bg-black text-white text-[10px] flex items-center justify-center font-bold">
+                ${currentLoggedInUser.name.charAt(0).toUpperCase()}
+              </span>
+              <span class="tracking-wide font-bold capitalize text-black">Hi, ${currentLoggedInUser.name}</span>
+            </span>
+            <button onclick="handleMemberLogout()" class="text-[10px] text-red-500 font-bold uppercase tracking-wider hover:underline">
+              Logout
             </button>
           </div>
-        ` : `
-          <p class="text-[11px] text-red-600 italic">This barcode has already undergone counter replacement.</p>
-        `}
-      `;
-    }
-
-    async function approveInStoreExchange(tagCode, originStore) {
-      const issue = document.getElementById('exchange-issue-select').value;
-      showToast('Processing Replacement...');
-
-      const localRec = localGuarantees.find(g => g.tag_code === tagCode);
-      if (localRec) {
-        localRec.is_exchanged = true;
-        localStorage.setItem('sg_local_guarantees', JSON.stringify(localGuarantees));
-      }
-
-      if (supabaseClient) {
-        try {
-          await supabaseClient.from('guarantees').update({ is_exchanged: true }).eq('tag_code', tagCode);
-        } catch (err) {}
-      }
-
-      const exchangeLog = {
-        date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }),
-        tagCode: tagCode,
-        originStore: originStore,
-        defect: issue,
-        status: 'Replaced (Credit Logged)'
-      };
-
-      partnerExchanges.unshift(exchangeLog);
-      localStorage.setItem('sg_partner_exchanges', JSON.stringify(partnerExchanges));
-
-      showToast(`Replacement Approved for ${tagCode}!`);
-      searchWarrantyRecord();
-      renderPartnerDesk();
-    }
-
-    // 6. UI NAVIGATION & STOREFRONT
-    function openGuaranteePortal(tab) {
-      toggleModal('guarantee-modal');
-      switchGuaranteeTab(tab || 'register');
-    }
-
-    function switchGuaranteeTab(tab) {
-      const regBtn = document.getElementById('gt-tab-register');
-      const claimBtn = document.getElementById('gt-tab-claim');
-      const regPanel = document.getElementById('guarantee-panel-register');
-      const claimPanel = document.getElementById('guarantee-panel-claim');
-
-      if (tab === 'register') {
-        regBtn.className = 'w-1/2 py-2 text-center text-black border-b-2 border-black';
-        claimBtn.className = 'w-1/2 py-2 text-center text-studio-800 hover:text-black';
-        regPanel.classList.remove('hidden');
-        claimPanel.classList.add('hidden');
+        `;
       } else {
-        claimBtn.className = 'w-1/2 py-2 text-center text-black border-b-2 border-black';
-        regBtn.className = 'w-1/2 py-2 text-center text-studio-800 hover:text-black';
-        claimPanel.classList.remove('hidden');
-        regPanel.classList.add('hidden');
+        slot.innerHTML = `
+          <button onclick="toggleDrawer('nav-drawer'); openAuthModal();" class="flex items-center justify-between w-full py-2.5 text-black hover:text-studio-800">
+            <span class="flex items-center space-x-2.5">
+              <svg class="w-4 h-4 text-studio-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              <span class="tracking-wide">1. Member Access</span>
+            </span>
+            <span class="text-[10px] text-studio-800 font-normal">Sign In &rarr;</span>
+          </button>
+        `;
       }
     }
 
-    function logoutPartnerDesk() {
-      switchView('store-view');
-      showToast('Logged out of Partner Desk');
+    function handleMemberLogout() {
+      currentLoggedInUser = null;
+      localStorage.removeItem('sg_active_user');
+      updateNavUserState();
+      showToast('Logged out of Member Vault');
     }
 
-    async function renderPartnerDesk() {
-      const exchangesCount = partnerExchanges.length;
-      document.getElementById('partner-stat-exchanges').innerText = `${exchangesCount} Pcs`;
-      document.getElementById('partner-stat-credit').innerText = `₹${exchangesCount * 450}`;
-
-      const rows = document.getElementById('partner-ledger-rows');
-      if (partnerExchanges.length === 0) {
-        rows.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-studio-800">No cross-store replacements processed yet today.</td></tr>`;
-        return;
-      }
-
-      rows.innerHTML = partnerExchanges.map(ex => `
-        <tr class="py-2.5 border-b border-studio-100">
-          <td class="py-2 font-medium text-black">${ex.date}</td>
-          <td class="py-2 font-bold text-black uppercase">${ex.tagCode}</td>
-          <td class="py-2 text-studio-800">${ex.originStore}</td>
-          <td class="py-2 text-studio-800">${ex.defect}</td>
-          <td class="py-2 text-right font-bold text-emerald-600">${ex.status}</td>
-        </tr>
-      `).join('');
-    }
-
+    // 5. UI NAVIGATION & STOREFRONT
     function scrollToStockists() {
       switchView('store-view');
       const section = document.getElementById('stockists-section');
@@ -1527,13 +1106,6 @@
       const arrow = document.getElementById('arrow-' + id);
       menu.classList.toggle('hidden');
       if (arrow) arrow.classList.toggle('rotate-180');
-    }
-
-    function filterCategoryByGSM(gsm) {
-      switchView('store-view');
-      const matches = PRODUCTS.filter(p => p.gsm === gsm);
-      renderProducts(matches.length > 0 ? matches : PRODUCTS);
-      showToast(`Showing ${gsm} GSM Silhouettes`);
     }
 
     function renderProducts(items) {
@@ -1993,7 +1565,7 @@
             <div class="flex justify-between text-[10px] font-bold text-black uppercase mb-1">
               <span class="text-black">1. Confirmed</span>
               <span class="text-studio-800">2. Quality Check</span>
-              <span class="text-studio-800">3. In Transit</span>
+              <span class="text-studio-800">3. Express Cargo</span>
               <span class="text-studio-800">4. Delivered</span>
             </div>
             <div class="w-full bg-studio-200 h-1.5 rounded-full overflow-hidden">
@@ -2021,7 +1593,7 @@
       });
     }
 
-    // 7. ORBIT AI CONCIERGE FUNCTIONS
+    // 6. ORBIT AI CONCIERGE FUNCTIONS
     function toggleAIChat() {
       const win = document.getElementById('ai-window');
       win.classList.toggle('hidden');
@@ -2061,9 +1633,7 @@
       let reply = "Our support concierge can clarify specific specs at care@saturnglow.com or WhatsApp / Call +91 7023037783.";
 
       if (q.includes('gsm') || q.includes('weight')) {
-        reply = "Drop 01 includes 180 GSM Super Combed Ring-Spun Cotton for daily comfort, 240 GSM 100% Cotton French Terry for heavy boxy oversized fit, and 240 GSM Pique Cotton for structured polos.";
-      } else if (q.includes('guarantee') || q.includes('warranty') || q.includes('exchange')) {
-        reply = "We offer a 45-day stitching replacement and 21-day color fastness guarantee across Balotra (SG-BLT), Jodhpur (SG-JDP), and Barmer (SG-BMR) partner stores!";
+        reply = "Drop 01 includes 180 GSM Super Combed Ring-Spun Cotton for daily thermal comfort, and 240 GSM 100% Cotton French Terry for heavy architectural boxy fit.";
       } else if (q.includes('store') || q.includes('offline') || q.includes('stockist')) {
         reply = "You can test our blanks offline at The Urban Clothier (Balotra), Vogue Menswear Studio (Jodhpur), and Apex Streetwear (Barmer).";
       } else if (q.includes('partner') || q.includes('b2b') || q.includes('wholesale')) {
@@ -2075,7 +1645,7 @@
       setTimeout(() => appendAIMessage(reply, 'bot'), 400);
     }
 
-    // 8. NOTIFICATION TOAST
+    // 7. NOTIFICATION TOAST
     function showToast(text) {
       const toast = document.createElement('div');
       toast.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-black text-white text-xs font-semibold px-4 py-2 rounded-full shadow-xl tracking-wide';
